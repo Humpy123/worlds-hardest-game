@@ -21,13 +21,13 @@ namespace worlds_hardest_game
             while (game)
             {
                 if (Console.KeyAvailable)
-                {
-                    
+                {   
+               
                     var key = Console.ReadKey(true).Key;
-                    if (key == ConsoleKey.UpArrow) board.MovePlayer(0, -1);
-                    else if (key == ConsoleKey.DownArrow) board.MovePlayer(0, 1);
-                    else if (key == ConsoleKey.LeftArrow) board.MovePlayer(-1, 0);
-                    else if (key == ConsoleKey.RightArrow) board.MovePlayer(1, 0);
+                    if (key == ConsoleKey.UpArrow && !board.IsWall(0, -1)) board.MovePlayer(0, -1);
+                    else if (key == ConsoleKey.DownArrow && !board.IsWall(0, 1)) board.MovePlayer(0, 1);
+                    else if (key == ConsoleKey.LeftArrow && !board.IsWall(-1, 0)) board.MovePlayer(-1, 0);
+                    else if (key == ConsoleKey.RightArrow && !board.IsWall(1, 0)) board.MovePlayer(1, 0);
                     else if(key == ConsoleKey.Escape) {game = false;};
                 }
 

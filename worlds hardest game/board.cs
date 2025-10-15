@@ -55,8 +55,8 @@ namespace worlds_hardest_game
         public void PrintFullboard()
         {
             Console.Clear();
-            Console.WriteLine("World's Hardest game! Level: 5");
-            Console.WriteLine();
+           // Console.WriteLine("World's Hardest game! Level: 5");
+            //Console.WriteLine();
 
 
             for (int y = 0; y < height; y++)
@@ -84,5 +84,11 @@ namespace worlds_hardest_game
             PrintCell(cell.Symbol.ToString(), cell.Color);
             player.Print();
         }
+
+        public bool IsWall(int dx, int dy)
+        {
+            var coords = player.GetCoords();
+            return cells[coords.x+dx, coords.y+dy] is Wall ? true : false;
+        } 
     }
 }

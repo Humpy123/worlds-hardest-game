@@ -9,36 +9,36 @@ namespace worlds_hardest_game
 {
     public class Player
     {
-        private int X, Y;
+        private int x, y;
 
-        public int oldX,oldY;
+        private int oldX,oldY;
 
         public char Symbol { get; set; }
 
         public Player(int x, int y,char symbol)
         {   
-            this.X = x;
-            this.Y = y;
+            this.x = x;
+            this.y = y;
             this.Symbol = symbol;
         }
 
         public void Move(int dx, int dy)
         {
-            oldX = X;
-            oldY = Y;
-            this.X += dx;
-            this.Y += dy;
+            oldX = x;
+            oldY = y;
+            this.x += dx;
+            this.y += dy;
         }
-        public (int x, int y) GetOldCoords() // tuple return type
-        {
-            return (oldX, oldY); // tuple literal
-        }
+
+        public (int x, int y) GetCoords() => (x, y);
+        public (int x, int y) GetOldCoords() => (oldX, oldY);
+
         public void Print()
         {
-            Console.SetCursorPosition(this.X, this.Y);
+            Console.SetCursorPosition(this.x, this.y);
             Console.Write(this.Symbol.ToString());
         }
 
-        public bool IsAt(int x, int y) => (this.X == x && this.Y == y) ? true : false;
+        public bool IsAt(int x, int y) => (this.x == x && this.y == y) ? true : false;
     }
 }
