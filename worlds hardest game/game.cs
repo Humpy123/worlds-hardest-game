@@ -17,7 +17,7 @@ namespace worlds_hardest_game
         {
 
             bool game = true;
-            board.Print();
+            board.PrintFullboard();
             while (game)
             {
                 if (Console.KeyAvailable)

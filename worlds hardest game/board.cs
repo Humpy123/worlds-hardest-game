@@ -45,25 +45,26 @@ namespace worlds_hardest_game
             cells[x, y] = cell;
         }
 
-        public void Print()
+        public void PrintCell(string text, ConsoleColor color)
+        {
+            Console.ForegroundColor = color;
+            Console.Write(text);
+            Console.ResetColor();
+        }
+
+        public void PrintFullboard()
         {
             Console.Clear();
             Console.WriteLine("World's Hardest game! Level: 5");
             Console.WriteLine();
 
-            void Print(string text, ConsoleColor color)
-            {
-                Console.ForegroundColor = color;
-                Console.Write(text);
-                Console.ResetColor();
-            }
 
             for (int y = 0; y < height; y++)
             {
                 for (int x = 0; x < width; x++)
                 {
                         var cell = cells[x, y];
-                        Print(cell.Symbol.ToString(), cell.Color);
+                        PrintCell(cell.Symbol.ToString(), cell.Color);
 
                 }
                 Console.WriteLine();
@@ -75,6 +76,13 @@ namespace worlds_hardest_game
             player.Move(dx, dy);
         }
 
-        public void PrintPlayer() => player.Print();
+        public void PrintPlayer()
+        {
+            var oldCoords = player.GetOldCoords();
+            Console.SetCursorPosition(oldCoords.x, oldCoords.y);
+            var cell = cells[oldCoords.x, oldCoords.y];
+            PrintCell(cell.Symbol.ToString(), cell.Color);
+            player.Print();
+        }
     }
 }

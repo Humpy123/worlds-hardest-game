@@ -7,7 +7,7 @@
             EndZone test = new EndZone();
             Board b = new Board(60, 30);
             b.AddCell(test, 5, 8);
-            b.Print();
+            b.PrintFullboard();
             test.OnEnter(b);
 
             Game game = new Game(b);
