@@ -20,7 +20,7 @@ namespace worlds_hardest_game
             this.width = width;
             this.height = height;
             cells = new ICell[width, height];
-            player = new Player(width / 2, height / 2, 'P');
+            player = new Player(width / 2, height / 2, '■');
 
             // Initialize all cells as empty
             for (int x = 0; x < width; x++)
@@ -64,6 +64,8 @@ namespace worlds_hardest_game
                 {
                         var cell = cells[x, y];
                         Print(cell.Symbol.ToString(), cell.Color);
+                    if (player.IsAt(x, y))
+                        Print(player.Symbol.ToString(), ConsoleColor.DarkRed);
                 }
                 Console.WriteLine();
             }

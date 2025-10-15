@@ -23,7 +23,8 @@ namespace worlds_hardest_game
         {
             this.x += dx;
             this.y += dy;
-
         }
+
+        public bool IsAt(int x, int y) => (this.x == x && this.y == y) ? true : false;
     }
 }
