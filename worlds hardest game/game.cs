@@ -14,21 +14,28 @@ namespace worlds_hardest_game
             this.board = board;
         public void Run()
         {
-            while ()
-            {
-                board.Print();
-                var key = Console.ReadKey(true).Key;
-                if (key == ConsoleKey.UpArrow) board.MovePlayer(0, -1);
-                else if (key == ConsoleKey.DownArrow) board.MovePlayer(0, 1);
-                else if (key == ConsoleKey.LeftArrow) board.MovePlayer(-1, 0);
-                else if (key == ConsoleKey.RightArrow) board.MovePlayer(1, 0);
-            }
-            board.Print();
 
-            Console.WriteLine();
-            Console.WriteLine("GAME OVER!");
-            Console.WriteLine("Press any key to exit...");
-            Console.ReadKey();
+            bool game = true;
+            while (game)
+            {
+                if (Console.KeyAvailable)
+                {
+                    
+                    var key = Console.ReadKey(true).Key;
+                    if (key == ConsoleKey.UpArrow) board.MovePlayer(0, -1);
+                    else if (key == ConsoleKey.DownArrow) board.MovePlayer(0, 1);
+                    else if (key == ConsoleKey.LeftArrow) board.MovePlayer(-1, 0);
+                    else if (key == ConsoleKey.RightArrow) board.MovePlayer(1, 0);
+                    else if(key == ConsoleKey.Escape) {game = false;};
+                }
+
+                Console.Clear();
+                board.Print();
+
+                Thread.Sleep(100);
+               
+            }
+
         }
     }
 }
