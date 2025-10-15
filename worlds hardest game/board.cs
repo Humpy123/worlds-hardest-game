@@ -13,12 +13,14 @@ namespace worlds_hardest_game
         private int width;
         private int height;
         private ICell[,] cells;
+        private Player player;
 
         public Board(int width, int height)
         {
             this.width = width;
             this.height = height;
             cells = new ICell[width, height];
+            player = new Player(width / 2, height / 2, 'P');
 
             // Initialize all cells as empty
             for (int x = 0; x < width; x++)
@@ -67,5 +69,9 @@ namespace worlds_hardest_game
             }
         }
 
+        public void MovePlayer(int dx, int dy)
+        {
+            player.Move(dx, dy);
+        }
     }
 }
