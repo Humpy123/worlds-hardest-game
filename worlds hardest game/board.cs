@@ -64,8 +64,7 @@ namespace worlds_hardest_game
                 {
                         var cell = cells[x, y];
                         Print(cell.Symbol.ToString(), cell.Color);
-                    if (player.IsAt(x, y))
-                        Print(player.Symbol.ToString(), ConsoleColor.DarkRed);
+
                 }
                 Console.WriteLine();
             }
@@ -75,5 +74,7 @@ namespace worlds_hardest_game
         {
             player.Move(dx, dy);
         }
+
+        public void PrintPlayer() => player.Print();
     }
 }

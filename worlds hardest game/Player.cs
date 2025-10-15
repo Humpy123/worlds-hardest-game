@@ -25,6 +25,12 @@ namespace worlds_hardest_game
             this.y += dy;
         }
 
+        public void Print()
+        {
+            Console.SetCursorPosition(this.x, this.y);
+            Console.Write(this.Symbol.ToString());
+        }
+
         public bool IsAt(int x, int y) => (this.x == x && this.y == y) ? true : false;
     }
 }

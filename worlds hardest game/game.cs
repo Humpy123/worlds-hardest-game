@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,6 +17,7 @@ namespace worlds_hardest_game
         {
 
             bool game = true;
+            board.Print();
             while (game)
             {
                 if (Console.KeyAvailable)
@@ -29,8 +31,10 @@ namespace worlds_hardest_game
                     else if(key == ConsoleKey.Escape) {game = false;};
                 }
 
-                Console.Clear();
-                board.Print();
+
+                //Console.Clear();
+                board.PrintPlayer();
+               // board.Print();
 
                 Thread.Sleep(100);
                
