@@ -6,22 +6,25 @@ using System.Threading.Tasks;
 
 namespace worlds_hardest_game
 {
-    interface IMoveBehavior
+    public interface IMoveBehavior
     {
-        void Move();
+        void Move(Player player,int dx, int dy);
     }
 
     class PlayerMovement : IMoveBehavior
     {
-        public (int x, int y) Move(Player player, int dx, int dy)
+        public void Move(Player player, int dx, int dy)
         {
-            player.
+            player.OldX = player.X;
+            player.OldY = player.Y;
+            player.X = dx;
+            player.Y = dy;
         }
     }
 
     class UpAndDownMovement : IMoveBehavior
     {
-        public void Move()
+        public void Move(Player player, int dx, int dy)
         {
 
         }

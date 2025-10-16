@@ -16,32 +16,34 @@ namespace worlds_hardest_game
         private int x, y;
         private int oldX, oldY;
 
-        public int X => x;
-        public int Y => y;
-        public int OldX => oldX;
-        public int OldY => oldY;
+        public int X {get; set;}
+        public int Y { get; set;}
+        public int OldX { get; set;}
+        public int OldY { get; set;}
 
-
-        //read-only
-        public int X => x;
-        public int Y => y;
-        public int OldX => oldX;
-        public int OldY => oldY;
         public char Symbol { get; set; }
 
-        public Player(int x, int y,char symbol)
+        public IMoveBehavior moveBehavior;
+
+        public Player(int x, int y,char symbol, IMoveBehavior moveBehavior)
         {   
             this.x = x;
             this.y = y;
+            this.X = this.x;
+            this.Y = this.y;
             this.Symbol = symbol;
+            this.moveBehavior = moveBehavior;
         }
 
         public void Move(int dx, int dy)
         {
-            oldX = x;
-            oldY = y;
-            this.x += dx;
-            this.y += dy;
+            OldX = x;
+            OldY = y;
+
+            moveBehavior.Move(this, dx, dy);
+
+            oldX = OldX;
+            oldY = OldY;
         }
 
         public void Print()
