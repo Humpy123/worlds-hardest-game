@@ -6,7 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace worlds_hardest_game
-{
+{   
+    interface Character
+    {
+        IMoveBehavior moveBehavior { get; set; }
+    }
     public class Player
     {
         private int x, y;
@@ -18,6 +22,11 @@ namespace worlds_hardest_game
         public int OldY => oldY;
 
 
+        //read-only
+        public int X => x;
+        public int Y => y;
+        public int OldX => oldX;
+        public int OldY => oldY;
         public char Symbol { get; set; }
 
         public Player(int x, int y,char symbol)
