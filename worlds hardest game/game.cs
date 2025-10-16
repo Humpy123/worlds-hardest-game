@@ -21,8 +21,7 @@ namespace worlds_hardest_game
             while (game)
             {
                 if (Console.KeyAvailable)
-                {   
-               
+                {                  
                     var key = Console.ReadKey(true).Key;
                     if (key == ConsoleKey.UpArrow && !board.IsWall(0, -1)) board.MovePlayer(0, -1);
                     else if (key == ConsoleKey.DownArrow && !board.IsWall(0, 1)) board.MovePlayer(0, 1);
@@ -33,7 +32,8 @@ namespace worlds_hardest_game
 
 
                 //Console.Clear();
-                board.PrintPlayer();
+                board.PrintPlayer(); 
+                board.IterateThroughCells();
                // board.Print();
 
                 Thread.Sleep(100);

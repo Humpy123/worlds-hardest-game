@@ -10,8 +10,13 @@ namespace worlds_hardest_game
     public class Player
     {
         private int x, y;
+        private int oldX, oldY;
 
-        private int oldX,oldY;
+        public int X => x;
+        public int Y => y;
+        public int OldX => oldX;
+        public int OldY => oldY;
+
 
         public char Symbol { get; set; }
 
@@ -29,9 +34,6 @@ namespace worlds_hardest_game
             this.x += dx;
             this.y += dy;
         }
-
-        public (int x, int y) GetCoords() => (x, y);
-        public (int x, int y) GetOldCoords() => (oldX, oldY);
 
         public void Print()
         {

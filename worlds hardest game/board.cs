@@ -40,10 +40,8 @@ namespace worlds_hardest_game
             }
         }
 
-        public void AddCell(ICell cell, int x, int y)
-        {
-            cells[x, y] = cell;
-        }
+        public void AddCell(ICell cell, int x, int y) => cells[x, y] = cell;
+
 
         public void PrintCell(string text, ConsoleColor color)
         {
@@ -52,12 +50,24 @@ namespace worlds_hardest_game
             Console.ResetColor();
         }
 
+        public void IterateThroughCells()
+        {
+            for (int x = 0; x < width; x++)
+            {
+                for (int y = 0; y < height; y++)
+                {
+                    var cell = cells[x, y];
+                    if (player.X == x && player.Y == y) cell.OnEnter(this); 
+
+                }
+            }
+        }
+
+
         public void PrintFullboard()
         {
             Console.Clear();
-           // Console.WriteLine("World's Hardest game! Level: 5");
-            //Console.WriteLine();
-
+            Console.BackgroundColor = ConsoleColor.White;
 
             for (int y = 0; y < height; y++)
             {
@@ -71,24 +81,17 @@ namespace worlds_hardest_game
             }
         }
 
-        public void MovePlayer(int dx, int dy)
-        {
-            player.Move(dx, dy);
-        }
+        public void MovePlayer(int dx, int dy) => player.Move(dx, dy);
+
 
         public void PrintPlayer()
         {
-            var oldCoords = player.GetOldCoords();
-            Console.SetCursorPosition(oldCoords.x, oldCoords.y);
-            var cell = cells[oldCoords.x, oldCoords.y];
+            Console.SetCursorPosition(player.OldX, player.OldY);
+            var cell = cells[player.OldX, player.OldY];
             PrintCell(cell.Symbol.ToString(), cell.Color);
             player.Print();
         }
 
-        public bool IsWall(int dx, int dy)
-        {
-            var coords = player.GetCoords();
-            return cells[coords.x+dx, coords.y+dy] is Wall ? true : false;
-        } 
+        public bool IsWall(int dx, int dy) => cells[player.X+dx, player.Y+dy] is Wall ? true : false;
     }
 }
