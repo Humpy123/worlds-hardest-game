@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace worlds_hardest_game
 {
-    interface IEnemyFactory
+    public interface IEnemyFactory
     {
         ICharacter CreateEnemy(int x, int y, char symbol, Board board);
     }
 
-    class BasicEnemyFactory : IEnemyFactory
+    public class BasicEnemyFactory : IEnemyFactory
     {
         public ICharacter CreateEnemy(int x, int y, char symbol, Board board) 
         {

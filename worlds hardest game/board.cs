@@ -15,16 +15,20 @@ namespace worlds_hardest_game
         private ICell[,] cells;
         private List<ICharacter> enemies = new List<ICharacter>();
         private Player player;
+        private IEnemyFactory factory;
 
-        public Board(int width, int height)
+        public Board(int width, int height, IEnemyFactory factory)
         {
             this.width = width;
             this.height = height;
+
+            this.factory = factory;
             cells = new ICell[width, height];
             player = new Player(width / 2, height / 2, '■', new PlayerMovement());
-            var opp = new BasicEnemy(width - 4, height - 4, 'A', new UpAndDownMovement(this));
+            //var opp = new BasicEnemy(width - 4, height - 4, 'A', new UpAndDownMovement(this));
+            AddEnemy(width - 4, height - 4);
 
-            enemies.Add(opp);
+            
 
             // Initialize all cells as empty
             for (int x = 0; x < width; x++)
@@ -42,6 +46,12 @@ namespace worlds_hardest_game
                 cells[0, y] = new Wall();         // Left wall
                 cells[width - 1, y] = new Wall();  // Right wall
             }
+        }
+
+        public void AddEnemy(int x, int y)
+        {
+            var enemy = factory.CreateEnemy(x, y, 'A', this);
+            enemies.Add(enemy);
         }
 
         public void AddCell(ICell cell, int x, int y) => cells[x, y] = cell;
