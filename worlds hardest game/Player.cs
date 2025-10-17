@@ -29,8 +29,8 @@ namespace worlds_hardest_game
         private int x, y;
         private int oldX, oldY;
 
-        public int X {get; set;}
-        public int Y { get; set;}
+        public int X { get => x; set => x = value; }
+        public int Y { get => y; set => y = value; }
         public int OldX => oldX;
         public int OldY => oldY;
         public char Symbol { get; set; }
@@ -73,8 +73,8 @@ namespace worlds_hardest_game
         private int x, y;
         private int oldX, oldY;
 
-        public int X { get; set; }
-        public int Y { get; set; }
+        public int X { get => x; set => x = value; }
+        public int Y { get => y; set => y = value; }
         public int OldX => oldX;
         public int OldY => oldY;
 

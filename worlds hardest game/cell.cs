@@ -43,7 +43,10 @@ namespace worlds_hardest_game
 
     public class EndZone : ICell
     {
-        public void OnEnter(Board board) => Console.WriteLine("You won!");
+        public void OnEnter(Board board)
+        {
+            board.EndGame();
+        }
         public char Symbol => '█';
         public ConsoleColor Color { get; set; } = ConsoleColor.Green;
     }

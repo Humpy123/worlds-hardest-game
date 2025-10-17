@@ -54,6 +54,13 @@ namespace worlds_hardest_game
             enemies.Add(enemy);
         }
 
+        public bool GameOver { get; private set; } = false;
+
+        public void EndGame()
+        {
+            GameOver = true;
+        }
+
         public void AddCell(ICell cell, int x, int y) => cells[x, y] = cell;
 
 
@@ -77,6 +84,12 @@ namespace worlds_hardest_game
             }
         }
 
+        public void IterateThroughEnemies()
+        {
+            foreach (var enemy in enemies)
+                if (enemy.X == player.X && enemy.Y == player.Y)
+                    this.EndGame();
+        }
 
         public void PrintFullboard()
         {
