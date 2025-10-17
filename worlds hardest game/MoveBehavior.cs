@@ -58,4 +58,25 @@ namespace worlds_hardest_game
 
     }
 
+    public class LeftToRightMovement : IMoveBehavior
+    {
+        private Board board;
+        private int direction = -1;
+
+        public LeftToRightMovement(Board board)
+        {
+            this.board = board;
+        }
+
+        public void Move(ICharacter character, Board board)
+        {
+            if (board.IsWallAtOffset(character, direction, 0))
+            {
+                direction *= -1;
+            }
+
+            character.MoveByDelta(direction, 0);
+        }
+
+    }
 }

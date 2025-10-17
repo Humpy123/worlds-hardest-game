@@ -29,9 +29,9 @@ namespace worlds_hardest_game
 
             this.factory = factory;
             cells = new ICell[width, height];
-            player = new Player(width / 2, height / 2, '■', new PlayerMovement());
+            player = new Player(width / 2 - 20, height / 2, '■', new PlayerMovement());
             //var opp = new BasicEnemy(width - 4, height - 4, 'A', new UpAndDownMovement(this));
-            AddEnemy(width - 4, height - 4);
+            AddEnemy(width / 2 + 1, height / 2 + 1);
 
             
 
