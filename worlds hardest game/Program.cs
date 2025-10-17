@@ -4,6 +4,8 @@
     {
         static void Main(string[] args)
         {
+            Console.CursorVisible = false;
+
             EndZone test = new EndZone();
             Board b = new Board(60, 30, new BasicEnemyFactory());
             b.AddCell(test, 5, 8);

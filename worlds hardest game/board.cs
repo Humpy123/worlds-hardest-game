@@ -17,6 +17,11 @@ namespace worlds_hardest_game
         private Player player;
         private IEnemyFactory factory;
 
+        public void ChangeCell<T>(int x, int y) where T : ICell, new()
+        {
+            cells[x, y] = new T();
+        }
+
         public Board(int width, int height, IEnemyFactory factory)
         {
             this.width = width;
@@ -30,10 +35,10 @@ namespace worlds_hardest_game
 
             
 
-            // Initialize all cells as empty
+            // Initialize all cells as WALL
             for (int x = 0; x < width; x++)
                 for (int y = 0; y < height; y++)
-                    cells[x, y] = new Empty();
+                    cells[x, y] = new Wall();
 
             // Add walls around the perimeter
             for (int x = 0; x < width; x++)
