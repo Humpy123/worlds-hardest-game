@@ -6,24 +6,36 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace worlds_hardest_game
-{   
-    interface Character
+{
+    public interface ICharacter
     {
+        int X { get; set; }
+        int Y { get; set; }
+        int OldX { get; }
+        int OldY { get; }
+        char Symbol { get; set; }
+
         IMoveBehavior moveBehavior { get; set; }
+
+        void Move(Board board);
+
+        void MoveByDelta(int dx, int dy);
+        void Print();
+        bool IsAt(int x, int y);
     }
-    public class Player
+
+    public class Player : ICharacter
     {
         private int x, y;
         private int oldX, oldY;
 
         public int X {get; set;}
         public int Y { get; set;}
-        public int OldX { get; set;}
-        public int OldY { get; set;}
-
+        public int OldX => oldX;
+        public int OldY => oldY;
         public char Symbol { get; set; }
+        public IMoveBehavior moveBehavior { get; set; }
 
-        public IMoveBehavior moveBehavior;
 
         public Player(int x, int y,char symbol, IMoveBehavior moveBehavior)
         {   
@@ -35,16 +47,17 @@ namespace worlds_hardest_game
             this.moveBehavior = moveBehavior;
         }
 
-        public void Move(int dx, int dy)
+        public void Move(Board board) => moveBehavior.Move(this, board);
+
+
+        public void MoveByDelta(int dx, int dy)
         {
-            OldX = x;
-            OldY = y;
-
-            moveBehavior.Move(this, dx, dy);
-
-            oldX = OldX;
-            oldY = OldY;
+            oldX = x;
+            oldY = y;
+            x += dx;
+            y += dy;
         }
+
 
         public void Print()
         {
@@ -53,5 +66,51 @@ namespace worlds_hardest_game
         }
 
         public bool IsAt(int x, int y) => (this.x == x && this.y == y) ? true : false;
+    }
+
+    class BasicEnemy : ICharacter
+    {
+        private int x, y;
+        private int oldX, oldY;
+
+        public int X { get; set; }
+        public int Y { get; set; }
+        public int OldX => oldX;
+        public int OldY => oldY;
+
+        public char Symbol { get; set; }
+
+        public IMoveBehavior moveBehavior { get; set; }
+
+
+        public BasicEnemy(int x, int y, char symbol, IMoveBehavior moveBehavior)
+        {
+            this.x = x;
+            this.y = y;
+            this.X = this.x;
+            this.Y = this.y;
+            this.Symbol = symbol;
+            this.moveBehavior = moveBehavior;
+        }
+
+        public void Move(Board board) => moveBehavior.Move(this, board);
+
+
+        public void MoveByDelta(int dx, int dy)
+        {
+            oldX = x;
+            oldY = y;
+            x += dx;
+            y += dy;
+        }
+
+
+        public void Print()
+        {
+            Console.SetCursorPosition(this.x, this.y);
+            Console.Write(this.Symbol.ToString());
+        }
+
+        public bool IsAt(int x, int y) { return false; }
     }
 }

@@ -8,26 +8,54 @@ namespace worlds_hardest_game
 {
     public interface IMoveBehavior
     {
-        void Move(Player player,int dx, int dy);
+        void Move(ICharacter character, Board board);
     }
 
-    class PlayerMovement : IMoveBehavior
+
+    public class PlayerMovement : IMoveBehavior
     {
-        public void Move(Player player, int dx, int dy)
+        public void Move(ICharacter character, Board board)
         {
-            player.OldX = player.X;
-            player.OldY = player.Y;
-            player.X = dx;
-            player.Y = dy;
+            if (Console.KeyAvailable)
+            {
+                var key = Console.ReadKey(true).Key;
+                int dx = 0, dy = 0;
+
+                if (key == ConsoleKey.UpArrow) dy = -1;
+                else if (key == ConsoleKey.DownArrow) dy = 1;
+                else if (key == ConsoleKey.LeftArrow) dx = -1;
+                else if (key == ConsoleKey.RightArrow) dx = 1;
+                else if (key == ConsoleKey.Escape) Environment.Exit(0);
+
+                if (!board.IsWallAt(character.X + dx, character.Y + dy))
+                {
+                    character.MoveByDelta(dx, dy);
+                }
+            }
         }
     }
 
-    class UpAndDownMovement : IMoveBehavior
-    {
-        public void Move(Player player, int dx, int dy)
-        {
 
+    public class UpAndDownMovement : IMoveBehavior
+    {
+        private Board board;
+        private int direction = -1;
+
+        public UpAndDownMovement(Board board)
+        {
+            this.board = board;
+        }
+
+        public void Move(ICharacter character, Board board)
+        {
+            if (board.IsWallAtOffset(character, 0, direction))
+            {
+                direction *= -1;
+            }
+
+            character.MoveByDelta(0, direction);
         }
 
     }
+
 }
