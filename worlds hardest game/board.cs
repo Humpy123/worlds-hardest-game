@@ -17,11 +17,18 @@ namespace worlds_hardest_game
         private Player player;
         private IEnemyFactory factory;
 
-        public void ChangeCell<T>(int x, int y) where T : ICell, new()
+        public void PrintLargeText(string[] artLines, ConsoleColor color)
         {
-            cells[x, y] = new T();
-        }
+            Console.ForegroundColor = color;
+            int offsetX = width + 5; // Adjust spacing from the board
+            int offsetY = 2;         // Top of the console
 
+            for (int i = 0; i < artLines.Length; i++)
+            {
+                Console.SetCursorPosition(offsetX, offsetY + i);
+                Console.WriteLine(artLines[i]);
+            }
+        }
         public Board(int width, int height, IEnemyFactory factory)
         {
             this.width = width;
@@ -30,8 +37,8 @@ namespace worlds_hardest_game
             this.factory = factory;
             cells = new ICell[width, height];
             player = new Player(width / 2 - 20, height / 2, '■', new PlayerMovement());
-            //var opp = new BasicEnemy(width - 4, height - 4, 'A', new UpAndDownMovement(this));
-            AddEnemy(width / 2 + 1, height / 2 + 1);
+
+            
 
             
 
@@ -55,7 +62,7 @@ namespace worlds_hardest_game
 
         public void AddEnemy(int x, int y)
         {
-            var enemy = factory.CreateEnemy(x, y, 'A', this);
+            var enemy = factory.CreateEnemy(x, y, '●', this);
             enemies.Add(enemy);
         }
 
@@ -122,26 +129,19 @@ namespace worlds_hardest_game
 
         public void PrintPlayer()
         {
-            Console.SetCursorPosition(player.OldX, player.OldY);
-            var cell = cells[player.OldX, player.OldY];
-            PrintCell(cell.Symbol.ToString(), cell.Color);
-            player.Print();
+            player.Print(this);
+            FixCell(player);
         }
 
-        public void PrintEnemies()
+        public void MoveAndPrintEnemies()
         {
-            foreach (var character in enemies)
+            foreach (var enemy in enemies)
             {
-                character.Move(this);
-                Console.SetCursorPosition(character.OldX, character.OldY);
-                var cell = cells[character.OldX, character.OldY];
-                PrintCell(cell.Symbol.ToString(), cell.Color);
-                character.Print();
+                enemy.Move(this);
+                enemy.Print(this);
+                FixCell(enemy);
             }
         }
-
-
-        public bool IsWall(int dx, int dy) => cells[player.X+dx, player.Y+dy] is Wall ? true : false;
 
         public bool IsWallAt(int x, int y)
         {
@@ -159,9 +159,13 @@ namespace worlds_hardest_game
             return cells[newX, newY] is Wall;
         }
 
-        public void MoveEnemies()
+        private void FixCell(ICharacter character)
         {
-
+            Console.SetCursorPosition(character.OldX, character.OldY);
+            var cell = cells[character.OldX, character.OldY];
+            PrintCell(cell.Symbol.ToString(), cell.Color);
         }
+        public ConsoleColor GetCellColor(int x, int y) => cells[x, y].Color;
+        public void ChangeCell<T>(int x, int y) where T : ICell, new() => cells[x, y] = new T();
     }
 }

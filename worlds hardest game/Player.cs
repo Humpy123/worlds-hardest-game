@@ -21,6 +21,7 @@ namespace worlds_hardest_game
 
         void MoveByDelta(int dx, int dy);
         void Print();
+        void Print(Board board);
         bool IsAt(int x, int y);
     }
 
@@ -28,6 +29,7 @@ namespace worlds_hardest_game
     {
         private int x, y;
         private int oldX, oldY;
+        private int deathCount { get; set; }
 
         public int X { get => x; set => x = value; }
         public int Y { get => y; set => y = value; }
@@ -45,6 +47,7 @@ namespace worlds_hardest_game
             this.Y = this.y;
             this.Symbol = symbol;
             this.moveBehavior = moveBehavior;
+            this.deathCount = 0;
         }
 
         public void Move(Board board) => moveBehavior.Move(this, board);
@@ -58,10 +61,15 @@ namespace worlds_hardest_game
             y += dy;
         }
 
-
+        public void Print(Board board)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.BackgroundColor = board.GetCellColor(x, y);
+            Print();
+        }
         public void Print()
         {
-            Console.SetCursorPosition(this.x, this.y);
+            Console.SetCursorPosition(x, y);
             Console.Write(this.Symbol.ToString());
         }
 
@@ -91,6 +99,7 @@ namespace worlds_hardest_game
             this.Y = this.y;
             this.Symbol = symbol;
             this.moveBehavior = moveBehavior;
+            
         }
 
         public void Move(Board board) => moveBehavior.Move(this, board);
@@ -105,9 +114,15 @@ namespace worlds_hardest_game
         }
 
 
+        public void Print(Board board)
+        {
+            Console.ForegroundColor = ConsoleColor.DarkBlue;
+            Console.BackgroundColor = board.GetCellColor(x, y);
+            Print();
+        }
         public void Print()
         {
-            Console.SetCursorPosition(this.x, this.y);
+            Console.SetCursorPosition(x, y);
             Console.Write(this.Symbol.ToString());
         }
 

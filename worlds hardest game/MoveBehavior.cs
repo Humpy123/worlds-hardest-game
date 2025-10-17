@@ -58,12 +58,12 @@ namespace worlds_hardest_game
 
     }
 
-    public class LeftToRightMovement : IMoveBehavior
+    public class SideToSideMovement : IMoveBehavior
     {
         private Board board;
         private int direction = -1;
 
-        public LeftToRightMovement(Board board)
+        public SideToSideMovement(Board board)
         {
             this.board = board;
         }

@@ -15,7 +15,7 @@ namespace worlds_hardest_game
     {
         public ICharacter CreateEnemy(int x, int y, char symbol, Board board) 
         {
-            return new BasicEnemy(x, y, symbol, new LeftToRightMovement(board));
+            return new BasicEnemy(x, y, symbol, new SideToSideMovement(board));
         }
     }
 
