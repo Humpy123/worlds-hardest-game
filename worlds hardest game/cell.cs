@@ -17,6 +17,8 @@ namespace worlds_hardest_game
         public void OnEnter(Board board) { }
         public char Symbol => '█';
         public ConsoleColor Color { get; set; } = ConsoleColor.White;
+
+        public void ChangeColor(ConsoleColor color) => this.Color = color;
     }
     public class Obstacle : ICell
     {
@@ -39,6 +41,13 @@ namespace worlds_hardest_game
         public char Symbol => '█';
         public ConsoleColor Color { get; set; } = ConsoleColor.Cyan;
 
+    }
+
+    public class StartZone : ICell
+    {
+        public void OnEnter(Board board) { }
+        public char Symbol => '█';
+        public ConsoleColor Color { get; set; } = ConsoleColor.Green;
     }
 
     public class EndZone : ICell

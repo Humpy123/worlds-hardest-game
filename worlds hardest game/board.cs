@@ -106,7 +106,12 @@ namespace worlds_hardest_game
                 for (int x = 0; x < width; x++)
                 {
                         var cell = cells[x, y];
-                        PrintCell(cell.Symbol.ToString(), cell.Color);
+                        if(cell is Empty emptyCell)
+                        {
+                            var color = ((x+y%2) % 2 == 0) ? ConsoleColor.White : ConsoleColor.Gray;
+                            emptyCell.Color = color;
+                        }
+                            PrintCell(cell.Symbol.ToString(), cell.Color);
 
                 }
                 Console.WriteLine();
