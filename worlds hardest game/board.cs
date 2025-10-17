@@ -16,6 +16,8 @@ namespace worlds_hardest_game
         private List<ICharacter> enemies = new List<ICharacter>();
         private Player player;
 
+
+
         public Board(int width, int height)
         {
             this.width = width;
@@ -44,6 +46,13 @@ namespace worlds_hardest_game
             }
         }
 
+        public bool GameOver { get; private set; } = false;
+
+        public void EndGame()
+        {
+            GameOver = true;
+        }
+
         public void AddCell(ICell cell, int x, int y) => cells[x, y] = cell;
 
 
@@ -65,6 +74,13 @@ namespace worlds_hardest_game
 
                 }
             }
+        }
+
+        public void IterateThroughEnemies()
+        {
+            foreach (var enemy in enemies)
+                if (enemy.X == player.X && enemy.Y == player.Y)
+                    this.EndGame();
         }
 
         public void PrintFullboard()
