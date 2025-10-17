@@ -67,7 +67,6 @@ namespace worlds_hardest_game
             }
         }
 
-
         public void PrintFullboard()
         {
             Console.Clear();

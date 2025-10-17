@@ -8,7 +8,6 @@
             Board b = new Board(60, 30);
             b.AddCell(test, 5, 8);
             b.PrintFullboard();
-            test.OnEnter(b);
 
             Game game = new Game(b);
             game.Run();
