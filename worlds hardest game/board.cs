@@ -16,19 +16,8 @@ namespace worlds_hardest_game
         private List<ICharacter> enemies = new List<ICharacter>();
         private Player player;
         private IEnemyFactory factory;
+        public bool LevelCompleted = false;
 
-        public void PrintLargeText(string[] artLines, ConsoleColor color)
-        {
-            Console.ForegroundColor = color;
-            int offsetX = width + 5; // Adjust spacing from the board
-            int offsetY = 2;         // Top of the console
-
-            for (int i = 0; i < artLines.Length; i++)
-            {
-                Console.SetCursorPosition(offsetX, offsetY + i);
-                Console.WriteLine(artLines[i]);
-            }
-        }
         public Board(int width, int height, IEnemyFactory factory)
         {
             this.width = width;
@@ -70,6 +59,12 @@ namespace worlds_hardest_game
 
         public void EndGame()
         {
+            GameOver = true;
+        }
+
+        public void WonGame()
+        {
+            LevelCompleted = true;
             GameOver = true;
         }
 

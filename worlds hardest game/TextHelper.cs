@@ -37,7 +37,7 @@ namespace worlds_hardest_game
             int startPoint = (Console.WindowWidth / 2) - (artLines[0].Length / 2);
             PrintLargeText(artLines, color, startPoint, y);
         }
-        public Func<string, int> CenterTextX = s => (Console.WindowWidth / 2) - (s.Length / 2);
+        public Func<string, int> FindCenterX = s => (Console.WindowWidth / 2) - (s.Length / 2);
         public void PrintStaggeredText(string s, int x, int y, ConsoleColor color)
         {
             Console.SetCursorPosition(x, y);

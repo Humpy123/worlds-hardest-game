@@ -11,11 +11,42 @@
 
             var printer = new TextHelper();
             printer.PrintLargeTextCentered(printer.IntroLogo, ConsoleColor.DarkCyan, 10);
-            printer.PrintStaggeredText(printer.enterText, printer.CenterTextX(printer.enterText), 17, ConsoleColor.DarkCyan);
-            Console.ReadLine();
-            Board b = new Board(60, 30, new BasicEnemyFactory());
-            Game game = new Game(b);
-            game.Run();
+            printer.PrintStaggeredText(printer.enterText, printer.FindCenterX(printer.enterText), 17, ConsoleColor.DarkCyan);
+            Console.ReadKey();
+
+            Board b;
+            Game game;
+            int level = 1;
+            int deathCount = 0;
+
+            while (true)
+            {
+                bool completed = false;
+                switch (level)
+                {
+                    case 1:
+                        b = new Board(60, 30, new BasicEnemyFactory());
+                        game = new Game(b, level);
+                        completed = game.Run(level, deathCount);
+                        break;
+                    case 2:
+                        b = new Board(60, 30, new BasicEnemyFactory());
+                        game = new Game(b, level);
+                        completed = game.Run(level, deathCount);
+                        break;
+
+                }
+
+                if (completed)
+                    level++;
+                else
+                    deathCount++;
+
+            }
+            
+
+
+
         }
     }
 }
