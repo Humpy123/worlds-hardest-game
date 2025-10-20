@@ -19,5 +19,14 @@ namespace worlds_hardest_game
         }
     }
 
+    public class BasicEnemy2Factory : IEnemyFactory
+    {
+        public ICharacter CreateEnemy(int x, int y, char symbol, Board board)
+        {
+            return new BasicEnemy(x, y, symbol, new UpAndDownMovement(board));
+        }
+    }
+
+
 }
 
