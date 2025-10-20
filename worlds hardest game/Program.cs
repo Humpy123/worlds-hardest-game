@@ -17,22 +17,22 @@
             Board b;
             Game game;
             int level = 1;
+            int deathCount = 0;
 
             while (true)
             {
-                int deathCount = 0;
                 bool completed = false;
                 switch (level)
                 {
                     case 1:
                         b = new Board(60, 30, new BasicEnemyFactory());
-                        game = new Game(b, 1);
-                        completed = game.Run();
+                        game = new Game(b, level);
+                        completed = game.Run(level, deathCount);
                         break;
                     case 2:
                         b = new Board(60, 30, new BasicEnemyFactory());
-                        game = new Game(b, 2);
-                        completed = game.Run();
+                        game = new Game(b, level);
+                        completed = game.Run(level, deathCount);
                         break;
 
                 }

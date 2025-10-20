@@ -20,14 +20,16 @@ namespace worlds_hardest_game
 
 
 
-        public bool Run()
+        public bool Run(int level, int deaths)
         {
             var printer = new TextHelper();
 
             board.PrintFullboard();
             printer.PrintLargeText(printer.InGameLogo2, ConsoleColor.DarkCyan, 62, 3);
             Console.SetCursorPosition(63, 13);
-            Console.WriteLine("Level: " + "1");
+            Console.WriteLine("Level: " + level);
+            Console.SetCursorPosition(63, 14);
+            Console.WriteLine("Deaths: " + deaths);
 
             var lastUpdate = DateTime.Now;
             var updateInterval = TimeSpan.FromMilliseconds(80);
