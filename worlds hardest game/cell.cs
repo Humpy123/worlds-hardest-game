@@ -54,7 +54,8 @@ namespace worlds_hardest_game
     {
         public void OnEnter(Board board)
         {
-            board.EndGame();
+            
+            board.WonGame();
         }
         public char Symbol => '█';
         public ConsoleColor Color { get; set; } = ConsoleColor.Green;
