@@ -11,15 +11,16 @@ namespace worlds_hardest_game
         ICharacter CreateEnemy(int x, int y, char symbol, Board board);
     }
 
-    public class BasicEnemyFactory : IEnemyFactory
-    {
+    public class SideToSideFactory : IEnemyFactory
+    {   
+        
         public ICharacter CreateEnemy(int x, int y, char symbol, Board board) 
         {
             return new BasicEnemy(x, y, symbol, new SideToSideMovement(board));
         }
     }
 
-    public class BasicEnemy2Factory : IEnemyFactory
+    public class UpAndDOwnFactory : IEnemyFactory
     {
         public ICharacter CreateEnemy(int x, int y, char symbol, Board board)
         {
