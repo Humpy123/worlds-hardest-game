@@ -63,14 +63,20 @@ namespace worlds_hardest_game
         public void ApplyEffect(Board board)
         {
             board.CoinCount--;
+            board.SetCell(
+                new Empty { Color = ColorHelper.GetCheckerColor(board.Player.X, board.Player.Y) },
+                board.Player.X,
+                board.Player.Y
+            );
+
+            board.PrintCell(board.Player.X, board.Player.Y);
         }
         public char Symbol => '●';
         public ConsoleColor Color { get; set; } = ConsoleColor.Yellow;
         public void OnEnter(Board board)
         {
             ApplyEffect(board);
-            board.SetCell<Empty>(2, 3);
-            board.PrintCell(board.Player.X, board.Player.Y);
+            
         } 
     }
 

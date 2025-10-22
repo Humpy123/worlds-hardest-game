@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -36,6 +37,9 @@ namespace worlds_hardest_game
 
             while (!board.GameOver)
             {
+                Console.SetCursorPosition(1, 1);
+                board.DebugCellType(30, 15);
+
                 // Handle input as fast as possible
                 board.MovePlayer();
                 board.PrintPlayer();
