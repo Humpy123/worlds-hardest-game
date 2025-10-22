@@ -72,6 +72,8 @@ namespace worlds_hardest_game
         {
             foreach (var enemy in enemies)
                 if (enemy.X == player.X && enemy.Y == player.Y)
+                    if (player.HasShield)
+                        player.HasShield = false;
                     this.EndGame();
         }
 
@@ -83,6 +85,12 @@ namespace worlds_hardest_game
                 cells[player.X, player.Y] = new Empty();
             cell.OnEnter(this);
         }
+
+        public void DebugCellType(int x, int y)
+        {
+            Console.WriteLine($"Cell at ({x}, {y}) is of type: {cells[x, y].GetType().Name}");
+        }
+
 
 
         public void PrintFullboard()
@@ -96,11 +104,8 @@ namespace worlds_hardest_game
                 {
                         var cell = cells[x, y];
                         if(cell is Empty emptyCell)
-                        {
-                            var color = ((x+y%2) % 2 == 0) ? ConsoleColor.White : ConsoleColor.Gray;
-                            emptyCell.Color = color;
-                        }
-                            PrintCell(cell.Symbol.ToString(), cell.Color);
+                            emptyCell.Color = ColorHelper.GetCheckerColor(x, y);
+                         PrintCell(cell.Symbol.ToString(), cell.Color);
 
                 }
                 Console.WriteLine();
