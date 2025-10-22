@@ -67,7 +67,7 @@ namespace worlds_hardest_game
             board.PrintCell(board.Player.X, board.Player.Y);
         }
         public char Symbol => '●';
-        public ConsoleColor Color { get; set; } = ConsoleColor.Yellow;
+        public ConsoleColor Color { get; set; } = ConsoleColor.DarkYellow;
         public void OnEnter(Board board)
         {
             ApplyEffect(board);
