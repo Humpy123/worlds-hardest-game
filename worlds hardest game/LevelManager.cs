@@ -26,13 +26,13 @@
             level.MakeRectangle<Empty>(14, 20, 20, 20);
             level.MakeRectangle<Empty>(40, 10, 44, 10);
 
-            board.CoinCount = 2;
+            board.CoinCount = 0;
             var coin = new GenericPickup<Coin>();
             var coin2 = new GenericPickup<Coin>();
-            var shield = new GenericPickup<Shield>();
+            var freeze = new GenericPickup<Freeze>();
             board.SetCell(coin, 30, 15);
             board.SetCell(coin2, 22, 11);
-            board.SetCell(shield, 25, 11);
+            board.SetCell(freeze, 25, 11);
 
             for (int i = 11; i <= 19; i++)
             {

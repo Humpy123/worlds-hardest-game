@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -11,6 +12,7 @@ namespace worlds_hardest_game
     public class Board
     {
         public int CoinCount { get; set; }
+        public int Frozen { get; set; }
         private int width;
         private int height;
         private ICell[,] cells;
@@ -27,7 +29,7 @@ namespace worlds_hardest_game
 
             this.factory = factory;
             cells = new ICell[width, height];
-            player = new Player('■', new PlayerMovement());
+            player = new Player('■', new PlayerMovement(), ConsoleColor.DarkRed);
 
             
 
@@ -71,14 +73,19 @@ namespace worlds_hardest_game
 
         public void IterateThroughEnemies()
         {
-            foreach (var enemy in enemies)
-                if (enemy.X == player.X && enemy.Y == player.Y)
+            foreach (ICharacter enemy in enemies)
+            {
+                 if (enemy.X == player.X && enemy.Y == player.Y)
                 {
                     if (player.Immunity <= 0)
                         this.EndGame();
-                }                   
-
+                }
+            }                            
         }
+
+        public void FreezeEnemies(int duration) => Frozen = duration;
+        public void Debug() => Console.WriteLine(Frozen);
+
 
         public void CheckPlayerCell()
         {
@@ -89,13 +96,6 @@ namespace worlds_hardest_game
             cell.OnEnter(this);
         }
 
-        public void DebugCellType(int x, int y)
-        {
-            Console.WriteLine(player.Immunity);
-        }
-
-
-
         public void PrintFullboard()
         {
             Console.Clear();
@@ -105,10 +105,9 @@ namespace worlds_hardest_game
             {
                 for (int x = 0; x < width; x++)
                 {
-                        var cell = cells[x, y];
-                        if(cell is Empty emptyCell)
-                            emptyCell.Color = ColorHelper.GetCheckerColor(x, y);
-                         PrintCell(cell.Symbol.ToString(), cell.Color);
+                    var cell = cells[x, y];
+                    ColorHelper.FixColors(cell, x, y);
+                    PrintCell(cell.Symbol.ToString(), cell.Color);
 
                 }
                 Console.WriteLine();
@@ -124,13 +123,17 @@ namespace worlds_hardest_game
         }
 
         public void MoveAndPrintEnemies()
-        {
-            foreach (var enemy in enemies)
+        {   
+            if(Frozen < 0)
             {
-                enemy.Move(this);
-                enemy.Print(this);
-                FixCell(enemy);
+                foreach (var enemy in enemies)
+                {
+                    enemy.Move(this);
+                    enemy.Print(this);
+                    FixCell(enemy);
+                }
             }
+            
         }
 
         public bool IsWallAt(int x, int y)

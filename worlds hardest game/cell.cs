@@ -64,7 +64,6 @@ namespace worlds_hardest_game
         {
             board.CoinCount--;
             board.FixCell();
-            board.PrintCell(board.Player.X, board.Player.Y);
         }
         public char Symbol => '●';
         public ConsoleColor Color { get; set; } = ConsoleColor.DarkYellow;
@@ -77,19 +76,34 @@ namespace worlds_hardest_game
     public class Shield : ICell, ICollectible
     {
         public void ApplyEffect(Board board)
-        {   
+        {
             board.Player.Immunity = 30;
             board.FixCell();
-            board.PrintCell(board.Player.X, board.Player.Y);
         }
         public char Symbol => '●';
         public ConsoleColor Color { get; set; } = ConsoleColor.Blue;
         public void OnEnter(Board board)
         {
             ApplyEffect(board);
-
         }
     }
+
+    public class Freeze : ICell, ICollectible
+    {
+        private int duration { get; set; }
+        public Freeze() => this.duration = 15;
+        public Freeze(int duration) => this.duration = duration;
+        public void ApplyEffect(Board board)
+        {
+            board.FreezeEnemies(duration);
+            board.FixCell();
+        }
+        public char Symbol => '‡';
+        public ConsoleColor Color { get; set; } = ConsoleColor.DarkCyan;
+        public void OnEnter(Board board) => ApplyEffect(board);
+    }
+
+
 
 
     public class GenericPickup<T> : ICell where T : ICollectible, ICell, new()

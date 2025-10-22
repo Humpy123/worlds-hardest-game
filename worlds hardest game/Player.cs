@@ -29,6 +29,7 @@ namespace worlds_hardest_game
     {
         private int x, y;
         private int oldX, oldY;
+        private ConsoleColor color;
         private int deathCount { get; set; }
         private int immunity { get; set; }
 
@@ -39,14 +40,16 @@ namespace worlds_hardest_game
         public char Symbol { get; set; }
         public IMoveBehavior moveBehavior { get; set; }
         public int Immunity { get => immunity; set =>  immunity = value; }
+        public ConsoleColor Color { get => color; set => color = value; }
 
 
 
-        public Player(char symbol, IMoveBehavior moveBehavior)
+        public Player(char symbol, IMoveBehavior moveBehavior, ConsoleColor color)
         {   
             this.Symbol = symbol;
             this.moveBehavior = moveBehavior;
             this.deathCount = 0;
+            this.color = color;
         }
 
         public void Move(Board board) => moveBehavior.Move(this, board);
@@ -63,7 +66,8 @@ namespace worlds_hardest_game
 
         public void Print(Board board)
         {
-            Console.ForegroundColor = ConsoleColor.Red;
+
+            Console.ForegroundColor = immunity > 0 ? ConsoleColor.Blue : ConsoleColor.DarkRed;
             Console.BackgroundColor = board.GetCellColor(x, y);
             Print();
         }
@@ -80,6 +84,7 @@ namespace worlds_hardest_game
     {
         private int x, y;
         private int oldX, oldY;
+        private bool frozen = false;
 
         public int X { get => x; set => x = value; }
         public int Y { get => y; set => y = value; }
@@ -101,6 +106,9 @@ namespace worlds_hardest_game
             this.moveBehavior = moveBehavior;
             
         }
+
+        public void Freeze() => frozen = true;
+        public void UnFreeze() => frozen = false;
 
         public void Move(Board board) => moveBehavior.Move(this, board);
 

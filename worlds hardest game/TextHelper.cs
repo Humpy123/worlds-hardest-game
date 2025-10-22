@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace worlds_hardest_game
 {
-    internal class TextHelper
+    static class TextHelper
     {
-        public string enterText = "Press enter to start!";
-        public string[] InGameLogo2 = new string[]
+        static public string enterText = "Press enter to start!";
+        static public string[] InGameLogo2 = new string[]
         {
             "  __   _       _  __  ___",
             " (_ ` / ) / / /_) )_) )_  ",
@@ -21,8 +22,24 @@ namespace worlds_hardest_game
             "                          "
         };
 
+        static public void PrintCoinCount(int coinCount)
+        {
+            Console.BackgroundColor = ConsoleColor.Cyan;
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.SetCursorPosition(21, 8);
+            Console.WriteLine("Coins Remaining: " + coinCount);
+            Console.ResetColor();
+        }
 
-        public string[] IntroLogo = new string[]
+
+        static public void ShieldActivated()
+        {
+            Console.SetCursorPosition(30, 5);
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("SHIELD ACTIVATED!");
+        }
+
+        static public string[] IntroLogo = new string[]
         {
             " _____  _____ _   _  ___  ______ ___________ _   _ _____ _   _  ___________ ",
             "/  ___||  _  | | | |/ _ \\ | ___ \\  ___| ___ \\ | | /  ___| | | ||  ___| ___ \\",
@@ -32,13 +49,13 @@ namespace worlds_hardest_game
             "\\____/  \\_/\\_\\\\___/\\_| |_/\\_| \\_\\____/\\_|    \\___/\\____/\\_| |_/\\____/\\_| \\_|"
         };
 
-        public void PrintLargeTextCentered(string[] artLines, ConsoleColor color, int y)
+        static public void PrintLargeTextCentered(string[] artLines, ConsoleColor color, int y)
         {
             int startPoint = (Console.WindowWidth / 2) - (artLines[0].Length / 2);
             PrintLargeText(artLines, color, startPoint, y);
         }
-        public Func<string, int> FindCenterX = s => (Console.WindowWidth / 2) - (s.Length / 2);
-        public void PrintStaggeredText(string s, int x, int y, ConsoleColor color)
+        static public Func<string, int> FindCenterX = s => (Console.WindowWidth / 2) - (s.Length / 2);
+        static public void PrintStaggeredText(string s, int x, int y, ConsoleColor color)
         {
             Console.SetCursorPosition(x, y);
             Console.ForegroundColor = color;
@@ -49,7 +66,7 @@ namespace worlds_hardest_game
             }
         }
 
-        public void PrintLargeText(string[] artLines, ConsoleColor color, int x, int y)
+        static public void PrintLargeText(string[] artLines, ConsoleColor color, int x, int y)
         {
             Console.ForegroundColor = color;
             for (int i = 0; i < artLines.Length; i++)
@@ -58,6 +75,15 @@ namespace worlds_hardest_game
                 Console.WriteLine(artLines[i]);
                 Thread.Sleep(50);
             }
+        }
+
+        static public void PrintSideText(int level, int deaths)
+        {
+            PrintLargeText(InGameLogo2, ConsoleColor.DarkCyan, 62, 3);
+            Console.SetCursorPosition(63, 13);
+            Console.WriteLine("Level: " + level);
+            Console.SetCursorPosition(63, 14);
+            Console.WriteLine("Deaths: " + deaths);
         }
     }
 }
