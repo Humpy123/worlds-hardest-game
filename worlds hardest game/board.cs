@@ -10,11 +10,13 @@ namespace worlds_hardest_game
 {
     public class Board
     {
+        public int CoinCount { get; set; }
         private int width;
         private int height;
         private ICell[,] cells;
         private List<ICharacter> enemies = new List<ICharacter>();
         private Player player;
+        public Player Player => player;
         private IEnemyFactory factory;
         public bool LevelCompleted = false;
 
@@ -25,7 +27,7 @@ namespace worlds_hardest_game
 
             this.factory = factory;
             cells = new ICell[width, height];
-            player = new Player(width / 2 - 20, height / 2, '■', new PlayerMovement());
+            player = new Player('■', new PlayerMovement());
 
             
 
@@ -35,18 +37,6 @@ namespace worlds_hardest_game
             for (int x = 0; x < width; x++)
                 for (int y = 0; y < height; y++)
                     cells[x, y] = new Wall();
-
-            // Add walls around the perimeter
-            for (int x = 0; x < width; x++)
-            {
-                cells[x, 0] = new Wall();         // Top wall
-                cells[x, height - 1] = new Wall(); // Bottom wall
-            }
-            for (int y = 0; y < height; y++)
-            {
-                cells[0, y] = new Wall();         // Left wall
-                cells[width - 1, y] = new Wall();  // Right wall
-            }
         }
 
         public void AddEnemy(int x, int y)
@@ -78,25 +68,22 @@ namespace worlds_hardest_game
             Console.ResetColor();
         }
 
-        public void IterateThroughCells()
-        {
-            for (int x = 0; x < width; x++)
-            {
-                for (int y = 0; y < height; y++)
-                {
-                    var cell = cells[x, y];
-                    if (player.X == x && player.Y == y) cell.OnEnter(this); 
-
-                }
-            }
-        }
-
         public void IterateThroughEnemies()
         {
             foreach (var enemy in enemies)
                 if (enemy.X == player.X && enemy.Y == player.Y)
                     this.EndGame();
         }
+
+        public void CheckPlayerCell()
+        {
+            var cell = cells[player.X, player.Y];
+
+            if(cell is ICollectible)
+                cells[player.X, player.Y] = new Empty();
+            cell.OnEnter(this);
+        }
+
 
         public void PrintFullboard()
         {
@@ -154,13 +141,23 @@ namespace worlds_hardest_game
             return cells[newX, newY] is Wall;
         }
 
-        private void FixCell(ICharacter character)
+        private void FixCell(ICharacter character) => PrintCell(character.OldX, character.OldY);
+        public void PrintCell(int x, int y)
         {
-            Console.SetCursorPosition(character.OldX, character.OldY);
-            var cell = cells[character.OldX, character.OldY];
+            Console.SetCursorPosition(x, y);
+            var cell = cells[x, y];
             PrintCell(cell.Symbol.ToString(), cell.Color);
         }
+
         public ConsoleColor GetCellColor(int x, int y) => cells[x, y].Color;
-        public void ChangeCell<T>(int x, int y) where T : ICell, new() => cells[x, y] = new T();
+        public void SetCell<T>(int x, int y) where T : ICell, new() => cells[x, y] = new T();
+        public void SetCell(ICell cell, int x, int y) => cells[x, y] = cell;
+
+        public void SetPlayerPos(int x, int y)
+        {
+            player.X = x;
+            player.Y = y;
+        }
+
     }
 }

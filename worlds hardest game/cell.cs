@@ -27,14 +27,6 @@ namespace worlds_hardest_game
         public char Symbol => 'O';
         public ConsoleColor Color { get; set; }
     }
-
-    public class Coin : ICell
-    {
-        public void OnEnter(Board board) { }
-
-        public char Symbol => 'C';
-        public ConsoleColor Color { get; set; }
-    }
     public class Wall : ICell
     {
         public void OnEnter(Board board) { }
@@ -54,10 +46,49 @@ namespace worlds_hardest_game
     {
         public void OnEnter(Board board)
         {
-            
-            board.WonGame();
+            if(board.CoinCount <= 0)
+                board.WonGame();
         }
         public char Symbol => '█';
         public ConsoleColor Color { get; set; } = ConsoleColor.Green;
     }
+
+    public interface ICollectible
+    {
+        void ApplyEffect(Board board);
+    }
+
+    public class Coin : ICell, ICollectible
+    {
+        public void ApplyEffect(Board board)
+        {
+            board.CoinCount--;
+        }
+        public char Symbol => '●';
+        public ConsoleColor Color { get; set; } = ConsoleColor.Yellow;
+        public void OnEnter(Board board)
+        {
+            ApplyEffect(board);
+            board.SetCell<Empty>(2, 3);
+            board.PrintCell(board.Player.X, board.Player.Y);
+        } 
+    }
+
+    public class GenericPickup<T> : ICell where T : ICollectible, ICell, new()
+    {
+        public T Item { get; set; } = new T();
+        public char Symbol => Item.Symbol;
+
+        public ConsoleColor Color
+        {
+            get => Item.Color;
+            set => Item.Color = value;
+        }
+
+        public void OnEnter(Board board)
+        {
+            Item.ApplyEffect(board);
+        }
+    }
+
 }

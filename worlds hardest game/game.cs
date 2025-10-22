@@ -45,7 +45,7 @@ namespace worlds_hardest_game
                 if (DateTime.Now - lastUpdate >= updateInterval)
                 {
                     board.MoveAndPrintEnemies();
-                    board.IterateThroughCells();
+                    board.CheckPlayerCell();
 
 
                     lastUpdate = DateTime.Now;

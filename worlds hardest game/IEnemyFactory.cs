@@ -20,7 +20,7 @@ namespace worlds_hardest_game
         }
     }
 
-    public class UpAndDOwnFactory : IEnemyFactory
+    public class UpAndDownFactory : IEnemyFactory
     {
         public ICharacter CreateEnemy(int x, int y, char symbol, Board board)
         {

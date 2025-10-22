@@ -21,7 +21,7 @@ namespace worlds_hardest_game
             {
                 for (int j = y1; j <= y2; j++)
                 {
-                    board.ChangeCell<T>(i, j);
+                    board.SetCell<T>(i, j);
                 }
             }
         }

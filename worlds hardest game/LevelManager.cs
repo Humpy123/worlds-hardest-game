@@ -26,31 +26,37 @@
             level.MakeRectangle<Empty>(14, 20, 20, 20);
             level.MakeRectangle<Empty>(40, 10, 44, 10);
 
-            for (int i = 11; i <= 19; i++)
+            board.CoinCount = 1;
+            var coin = new GenericPickup<Coin>();
+            board.SetCell(coin, 30, 15);
+
+            for (int i = 111; i <= 19; i++)
             {
                 if (i % 2 == 0)
                     board.AddEnemy(42, i);
                 else
                     board.AddEnemy(18, i);
             }
+
+            board.SetPlayerPos(11, 15);
         }
 
         private static void SetupLevel2(Board board)
         {
             var level = new LevelCreator(board);
-            level.MakeRectangle<Empty>(4, 10, 15, 20);
-            level.MakeRectangle<EndZone>(45, 10, 56, 20);
-            level.MakeRectangle<Empty>(18, 11, 42, 19);
-            level.MakeRectangle<Empty>(14, 20, 20, 20);
-            level.MakeRectangle<Empty>(13, 10, 44, 10);
+            level.MakeRectangle<Empty>(14, 12, 46, 19);
+            level.MakeRectangle<Empty>(6, 14, 13, 17);
+            level.MakeRectangle<EndZone>(47, 14, 54, 17);
 
-            for (int i = 11; i <= 13; i++)
+            for (int i = 5; i <= 15; i++)
             {
                 if (i % 2 == 0)
-                    board.AddEnemy(42, i);
+                    board.AddEnemy(i*3, 12);
                 else
-                    board.AddEnemy(18, i);
+                    board.AddEnemy(i*3, 19);
             }
+
+            board.SetPlayerPos(11, 15);
         }
     }
 }

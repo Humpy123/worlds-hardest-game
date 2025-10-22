@@ -39,12 +39,8 @@ namespace worlds_hardest_game
         public IMoveBehavior moveBehavior { get; set; }
 
 
-        public Player(int x, int y,char symbol, IMoveBehavior moveBehavior)
+        public Player(char symbol, IMoveBehavior moveBehavior)
         {   
-            this.x = x;
-            this.y = y;
-            this.X = this.x;
-            this.Y = this.y;
             this.Symbol = symbol;
             this.moveBehavior = moveBehavior;
             this.deathCount = 0;

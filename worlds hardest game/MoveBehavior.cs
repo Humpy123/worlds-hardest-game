@@ -21,10 +21,10 @@ namespace worlds_hardest_game
                 var key = Console.ReadKey(true).Key;
                 int dx = 0, dy = 0;
 
-                if (key == ConsoleKey.UpArrow) dy = -1;
-                else if (key == ConsoleKey.DownArrow) dy = 1;
-                else if (key == ConsoleKey.LeftArrow) dx = -1;
-                else if (key == ConsoleKey.RightArrow) dx = 1;
+                if (key == ConsoleKey.UpArrow || key == ConsoleKey.W) dy = -1;
+                else if (key == ConsoleKey.DownArrow || key == ConsoleKey.S) dy = 1;
+                else if (key == ConsoleKey.LeftArrow || key == ConsoleKey.A) dx = -1;
+                else if (key == ConsoleKey.RightArrow || key == ConsoleKey.D) dx = 1;
                 else if (key == ConsoleKey.Escape) Environment.Exit(0);
 
                 if (!board.IsWallAt(character.X + dx, character.Y + dy))
@@ -39,6 +39,7 @@ namespace worlds_hardest_game
     public class UpAndDownMovement : IMoveBehavior
     {
         private Board board;
+        int count = 0;
         private int direction = -1;
 
         public UpAndDownMovement(Board board)
@@ -53,7 +54,9 @@ namespace worlds_hardest_game
                 direction *= -1;
             }
 
-            character.MoveByDelta(0, direction);
+            
+            if(++count % 2 == 0)
+                character.MoveByDelta(0, direction);
         }
 
     }
