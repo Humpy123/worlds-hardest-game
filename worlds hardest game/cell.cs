@@ -63,12 +63,7 @@ namespace worlds_hardest_game
         public void ApplyEffect(Board board)
         {
             board.CoinCount--;
-            board.SetCell(
-                new Empty { Color = ColorHelper.GetCheckerColor(board.Player.X, board.Player.Y) },
-                board.Player.X,
-                board.Player.Y
-            );
-
+            board.FixCell();
             board.PrintCell(board.Player.X, board.Player.Y);
         }
         public char Symbol => '●';

@@ -68,13 +68,17 @@ namespace worlds_hardest_game
             Console.ResetColor();
         }
 
+
         public void IterateThroughEnemies()
         {
             foreach (var enemy in enemies)
                 if (enemy.X == player.X && enemy.Y == player.Y)
+                {
                     if (player.HasShield)
                         player.HasShield = false;
                     this.EndGame();
+                }                   
+
         }
 
         public void CheckPlayerCell()
@@ -146,6 +150,16 @@ namespace worlds_hardest_game
             return cells[newX, newY] is Wall;
         }
 
+        public void FixCell()
+        {
+            SetCell(
+                new Empty { Color = ColorHelper.GetCheckerColor(Player.X, Player.Y) },
+                Player.X,
+                Player.Y
+            );
+
+            PrintCell(Player.X, Player.Y);
+        }
         private void FixCell(ICharacter character) => PrintCell(character.OldX, character.OldY);
         public void PrintCell(int x, int y)
         {

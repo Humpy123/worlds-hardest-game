@@ -32,7 +32,7 @@
             board.SetCell(coin, 30, 15);
             board.SetCell(coin2, 22, 11);
 
-            for (int i = 111; i <= 19; i++)
+            for (int i = 11; i <= 19; i++)
             {
                 if (i % 2 == 0)
                     board.AddEnemy(42, i);
