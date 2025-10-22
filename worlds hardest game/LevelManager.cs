@@ -29,8 +29,10 @@
             board.CoinCount = 2;
             var coin = new GenericPickup<Coin>();
             var coin2 = new GenericPickup<Coin>();
+            var shield = new GenericPickup<Shield>();
             board.SetCell(coin, 30, 15);
             board.SetCell(coin2, 22, 11);
+            board.SetCell(shield, 25, 11);
 
             for (int i = 11; i <= 19; i++)
             {

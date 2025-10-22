@@ -30,7 +30,7 @@ namespace worlds_hardest_game
         private int x, y;
         private int oldX, oldY;
         private int deathCount { get; set; }
-        private bool hasShield { get; set; }
+        private int immunity { get; set; }
 
         public int X { get => x; set => x = value; }
         public int Y { get => y; set => y = value; }
@@ -38,7 +38,7 @@ namespace worlds_hardest_game
         public int OldY => oldY;
         public char Symbol { get; set; }
         public IMoveBehavior moveBehavior { get; set; }
-        public bool HasShield { get => hasShield; set => hasShield = value; }
+        public int Immunity { get => immunity; set =>  immunity = value; }
 
 
 
@@ -50,6 +50,7 @@ namespace worlds_hardest_game
         }
 
         public void Move(Board board) => moveBehavior.Move(this, board);
+
 
 
         public void MoveByDelta(int dx, int dy)
