@@ -74,9 +74,8 @@ namespace worlds_hardest_game
             foreach (var enemy in enemies)
                 if (enemy.X == player.X && enemy.Y == player.Y)
                 {
-                    if (player.HasShield)
-                        player.HasShield = false;
-                    this.EndGame();
+                    if (player.Immunity <= 0)
+                        this.EndGame();
                 }                   
 
         }
@@ -92,7 +91,7 @@ namespace worlds_hardest_game
 
         public void DebugCellType(int x, int y)
         {
-            Console.WriteLine($"Cell at ({x}, {y}) is of type: {cells[x, y].GetType().Name}");
+            Console.WriteLine(player.Immunity);
         }
 
 

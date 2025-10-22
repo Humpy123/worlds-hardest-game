@@ -51,7 +51,7 @@ namespace worlds_hardest_game
                     board.MoveAndPrintEnemies();
                     board.CheckPlayerCell();
 
-
+                    board.Player.Immunity--;
                     lastUpdate = DateTime.Now;
                 }
             }

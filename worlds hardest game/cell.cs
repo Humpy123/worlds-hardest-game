@@ -77,16 +77,17 @@ namespace worlds_hardest_game
     public class Shield : ICell, ICollectible
     {
         public void ApplyEffect(Board board)
-        {
-            
+        {   
+            board.Player.Immunity = 30;
+            board.FixCell();
+            board.PrintCell(board.Player.X, board.Player.Y);
         }
         public char Symbol => '●';
         public ConsoleColor Color { get; set; } = ConsoleColor.Blue;
         public void OnEnter(Board board)
         {
             ApplyEffect(board);
-            board.SetCell<Empty>(2, 3);
-            board.PrintCell(board.Player.X, board.Player.Y);
+
         }
     }
 
