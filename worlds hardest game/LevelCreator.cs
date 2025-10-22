@@ -9,7 +9,6 @@ namespace worlds_hardest_game
     internal class LevelCreator
     {
         private Board board { get; set; }
-
         public LevelCreator(Board board)
         {
             this.board = board;

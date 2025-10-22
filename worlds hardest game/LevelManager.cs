@@ -2,6 +2,7 @@
 {
     public static class LevelManager
     {
+
         public static void SetupLevel(Board board, int level)
         {
             switch (level)
@@ -12,6 +13,12 @@
                 case 2:
                     SetupLevel2(board);
                     break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    break;
                 default:
                     throw new ArgumentException("Invalid level number");
             }
@@ -20,6 +27,8 @@
         private static void SetupLevel1(Board board)
         {
             var level = new LevelCreator(board);
+            board.SetPlayerPos(11, 15);
+
             level.MakeRectangle<Empty>(4, 10, 15, 20);
             level.MakeRectangle<EndZone>(45, 10, 56, 20);
             level.MakeRectangle<Empty>(18, 11, 42, 19);
@@ -34,7 +43,7 @@
             board.SetCell(coin2, 22, 11);
             board.SetCell(freeze, 25, 11);
 
-            for (int i = 11; i <= 19; i++)
+            for (int i = 12; i <= 18; i++)
             {
                 if (i % 2 == 0)
                     board.AddEnemy(42, i);
@@ -48,6 +57,8 @@
         private static void SetupLevel2(Board board)
         {
             var level = new LevelCreator(board);
+            board.SetPlayerPos(11, 15);
+
             level.MakeRectangle<Empty>(14, 12, 46, 19);
             level.MakeRectangle<Empty>(6, 14, 13, 17);
             level.MakeRectangle<EndZone>(47, 14, 54, 17);
@@ -61,6 +72,18 @@
             }
 
             board.SetPlayerPos(11, 15);
+        }
+
+        private static void SetupLevel3(Board board)
+        {
+            var level = new LevelCreator(board);
+            board.SetPlayerPos(11, 15);
+
+            level.MakeRectangle<Empty>(14, 12, 46, 19);
+            level.MakeRectangle<Empty>(6, 14, 13, 17);
+            level.MakeRectangle<EndZone>(47, 14, 54, 17);
+
+            board.AddEnemy(20, 14);
         }
     }
 }

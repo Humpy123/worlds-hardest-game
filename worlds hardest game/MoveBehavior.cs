@@ -53,8 +53,8 @@ namespace worlds_hardest_game
             {
                 direction *= -1;
             }
-
             
+            // Limits up and down movement because pixels are taller than they are wide
             if(++count % 2 == 0)
                 character.MoveByDelta(0, direction);
         }

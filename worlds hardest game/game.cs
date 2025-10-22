@@ -35,7 +35,7 @@ namespace worlds_hardest_game
                 // Handle input as fast as possible
                 board.MovePlayer();
                 board.PrintPlayer();
-                board.IterateThroughEnemies();
+                board.CheckEnemyCollision();
                 board.CheckPlayerCell();
 
                 TextHelper.PrintCoinCount(board.CoinCount);
@@ -52,7 +52,7 @@ namespace worlds_hardest_game
                 }
             }
 
-            return board.LevelCompleted;
+            return board.IsLevelCompleted;
         }
 
     }

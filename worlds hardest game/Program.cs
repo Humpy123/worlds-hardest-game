@@ -34,21 +34,13 @@
                         break;
                     case 5:
                         break;
-
-
-
                 }
 
                 if (completed)
                     level++;
                 else
                     deathCount++;
-
-            }
-            
-
-
-
+            }   
         }
     }
 }

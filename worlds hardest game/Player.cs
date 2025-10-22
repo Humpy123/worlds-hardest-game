@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace worlds_hardest_game
 {
@@ -14,97 +9,70 @@ namespace worlds_hardest_game
         int OldX { get; }
         int OldY { get; }
         char Symbol { get; set; }
-
         IMoveBehavior moveBehavior { get; set; }
 
         void Move(Board board);
-
         void MoveByDelta(int dx, int dy);
-        void Print();
         void Print(Board board);
         bool IsAt(int x, int y);
     }
 
     public class Player : ICharacter
     {
-        private int x, y;
-        private int oldX, oldY;
-        private ConsoleColor color;
-        private int deathCount { get; set; }
-        private int immunity { get; set; }
-
-        public int X { get => x; set => x = value; }
-        public int Y { get => y; set => y = value; }
-        public int OldX => oldX;
-        public int OldY => oldY;
+        public int X { get; set; }
+        public int Y { get; set; }
+        public int OldX { get; private set; }
+        public int OldY { get; private set; }
         public char Symbol { get; set; }
         public IMoveBehavior moveBehavior { get; set; }
-        public int Immunity { get => immunity; set =>  immunity = value; }
-        public ConsoleColor Color { get => color; set => color = value; }
-
-
+        public int Immunity { get; set; }
+        public ConsoleColor Color { get; set; }
 
         public Player(char symbol, IMoveBehavior moveBehavior, ConsoleColor color)
-        {   
-            this.Symbol = symbol;
+        {
+            Symbol = symbol;
             this.moveBehavior = moveBehavior;
-            this.deathCount = 0;
-            this.color = color;
+            Immunity = 0;
+            Color = color;
         }
 
         public void Move(Board board) => moveBehavior.Move(this, board);
 
-
-
         public void MoveByDelta(int dx, int dy)
         {
-            oldX = x;
-            oldY = y;
-            x += dx;
-            y += dy;
+            OldX = X;
+            OldY = Y;
+            X += dx;
+            Y += dy;
         }
 
         public void Print(Board board)
         {
-
-            Console.ForegroundColor = immunity > 0 ? ConsoleColor.Blue : ConsoleColor.DarkRed;
-            Console.BackgroundColor = board.GetCellColor(x, y);
-            Print();
+            Console.ForegroundColor = Immunity > 0 ? ConsoleColor.Blue : ConsoleColor.DarkRed;
+            Console.BackgroundColor = board.GetCellColor(X, Y);
+            Console.SetCursorPosition(X, Y);
+            Console.Write(Symbol.ToString());
         }
-        public void Print()
-        {
-            Console.SetCursorPosition(x, y);
-            Console.Write(this.Symbol.ToString());
-        }
-
-        public bool IsAt(int x, int y) => (this.x == x && this.y == y) ? true : false;
+        public bool IsAt(int x, int y) => X == x && Y == y;
     }
 
-    class BasicEnemy : ICharacter
+    public class BasicEnemy : ICharacter
     {
-        private int x, y;
-        private int oldX, oldY;
-        private bool frozen = false;
-
-        public int X { get => x; set => x = value; }
-        public int Y { get => y; set => y = value; }
-        public int OldX => oldX;
-        public int OldY => oldY;
-
+        public int X { get; set; }
+        public int Y { get; set; }
+        public int OldX { get; private set; }
+        public int OldY { get; private set; }
         public char Symbol { get; set; }
-
         public IMoveBehavior moveBehavior { get; set; }
 
+        private bool frozen = false;
 
         public BasicEnemy(int x, int y, char symbol, IMoveBehavior moveBehavior)
         {
-            this.x = x;
-            this.y = y;
-            this.X = this.x;
-            this.Y = this.y;
-            this.Symbol = symbol;
+            X = x;
+            Y = y;
+            Symbol = symbol;
             this.moveBehavior = moveBehavior;
-            
         }
 
         public void Freeze() => frozen = true;
@@ -112,28 +80,21 @@ namespace worlds_hardest_game
 
         public void Move(Board board) => moveBehavior.Move(this, board);
 
-
         public void MoveByDelta(int dx, int dy)
         {
-            oldX = x;
-            oldY = y;
-            x += dx;
-            y += dy;
+            OldX = X;
+            OldY = Y;
+            X += dx;
+            Y += dy;
         }
-
 
         public void Print(Board board)
         {
             Console.ForegroundColor = ConsoleColor.DarkBlue;
-            Console.BackgroundColor = board.GetCellColor(x, y);
-            Print();
+            Console.BackgroundColor = board.GetCellColor(X, Y);
+            Console.SetCursorPosition(X, Y);
+            Console.Write(Symbol.ToString());
         }
-        public void Print()
-        {
-            Console.SetCursorPosition(x, y);
-            Console.Write(this.Symbol.ToString());
-        }
-
-        public bool IsAt(int x, int y) { return false; }
+        public bool IsAt(int x, int y) => false;
     }
 }
