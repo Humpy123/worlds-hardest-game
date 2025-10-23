@@ -6,6 +6,11 @@
     <RootNamespace>worlds_hardest_game</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+	<EnableWindowsSupport>true</EnableWindowsSupport>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Drawing.Common" Version="9.0.10" />
+  </ItemGroup>
 
 </Project>

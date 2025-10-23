@@ -1,19 +1,27 @@
-﻿namespace worlds_hardest_game
+﻿using System.Security.Cryptography.X509Certificates;
+using System.Text.Json;
+
+namespace worlds_hardest_game
 {
     internal class Program
     {
 
-        static void Main(string[] args)
-        {
+         static void Main(string[] args)
+         {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
             Console.CursorVisible = false;
             Board board;
             Game game;
+            PlayerFile currentPlayer = new PlayerFile("Tony K");
 
-            int level = 1;
+            int timeElapsed = 0;
+            int level = 5;
             int deathCount = 0;
+            bool gameRunning = true;
 
-            while (true)
+           //Scores.InitList();
+
+            while (gameRunning)
             {
                 bool completed = false;
                 switch (level)
@@ -21,18 +29,49 @@
                     case 1:
                         board = new Board(60, 30, new SideToSideFactory());
                         game = new Game(board, level);
-                        completed = game.Run(level, deathCount);
+                        var gameResult = game.Run(level, deathCount);
+                        completed = gameResult.completed;
+                        timeElapsed += gameResult.timeSpent;
                         break;
                     case 2:
                         board = new Board(60, 30, new UpAndDownFactory());
                         game = new Game(board, level);
-                        completed = game.Run(level, deathCount);
+                        gameResult = game.Run(level, deathCount);
+                        completed = gameResult.completed;
+                        timeElapsed += gameResult.timeSpent;
                         break;
                     case 3:
+                        board = new Board(60, 30, new UpAndDownFactory());
+                        game = new Game(board, level);
+                        gameResult = game.Run(level, deathCount);
+                        completed = gameResult.completed;
+                        timeElapsed += gameResult.timeSpent;
                         break;
                     case 4:
+                        board = new Board(60, 30, new UpAndDownFactory());
+                        game = new Game(board, level);
+                        gameResult = game.Run(level, deathCount);
+                        completed = gameResult.completed;
+                        timeElapsed += gameResult.timeSpent;
                         break;
                     case 5:
+                        BoardFetcher boardFetcher = new BoardFetcher();
+                        board = boardFetcher.ReadImage(@"C:\Users\olive\source\repos\worlds hardest game\worlds hardest game\assets\boards\test.png");
+                        game = new Game(board, level);
+                        gameResult = game.Run(level, deathCount);
+                        completed = gameResult.completed;
+                        timeElapsed += gameResult.timeSpent;
+                        break;
+                    case 7:
+                        boardFetcher = new BoardFetcher();
+                        board = boardFetcher.ReadImage(@"C:\Users\olive\source\repos\worlds hardest game\worlds hardest game\assets\boards\level1.png");
+                        game = new Game(board, level);
+                        gameResult = game.Run(level, deathCount);
+                        completed = gameResult.completed;
+                        timeElapsed += gameResult.timeSpent;
+                        break;
+                    default:
+                        gameRunning = false;
                         break;
                 }
 
@@ -40,7 +79,14 @@
                     level++;
                 else
                     deathCount++;
-            }   
+            }
+            Scores.Add(currentPlayer, timeElapsed);
+            foreach(var score in Scores.GetHighScores())
+            {
+                int scoreInDeciSecs = Convert.ToInt32(score.GameScore);
+                Console.Write(score.Name + ":      " + scoreInDeciSecs/10 + "." + scoreInDeciSecs%10 + " Seconds");
+                Console.WriteLine();
+            }
         }
     }
 }

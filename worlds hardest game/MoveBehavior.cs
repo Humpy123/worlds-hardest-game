@@ -59,9 +59,8 @@ namespace worlds_hardest_game
                 direction *= -1;
             }
             
-            // Limits up and down movement because pixels are taller than they are wide
-            if(++count % 2 == 0)
-                character.MoveByDelta(0, direction);
+
+             character.MoveByDelta(0, direction);
         }
 
     }
@@ -90,7 +89,8 @@ namespace worlds_hardest_game
     public class DVDMovement : IMoveBehavior
     {
         private Board board;
-        private int direction = -1;
+        private int directionX = -1;
+        private int directionY = -1;
 
         public DVDMovement(Board board)
         {
@@ -99,12 +99,16 @@ namespace worlds_hardest_game
 
         public void Move(ICharacter character, Board board)
         {
-            if (board.IsWallAtOffset(character, direction, 0))
+            if (board.IsWallAtOffset(character, directionX, 0))
             {
-                direction *= -1;
+                directionX *= -1;
+            }
+            if (board.IsWallAtOffset(character, 0, directionY))
+            {
+                directionY *= -1;
             }
 
-            character.MoveByDelta(direction, 0);
+            character.MoveByDelta(directionX, directionY);
         }
 
     }

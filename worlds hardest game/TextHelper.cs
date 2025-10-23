@@ -31,14 +31,6 @@ namespace worlds_hardest_game
             Console.ResetColor();
         }
 
-
-        static public void ShieldActivated()
-        {
-            Console.SetCursorPosition(30, 5);
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine("SHIELD ACTIVATED!");
-        }
-
         static public string[] IntroLogo = new string[]
         {
             " _____  _____ _   _  ___  ______ ___________ _   _ _____ _   _  ___________ ",

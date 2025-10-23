@@ -18,14 +18,15 @@ namespace worlds_hardest_game
             LevelManager.SetupLevel(this.board, level);
         }
 
-        public bool Run(int level, int deaths)
+        public (bool completed, int timeSpent) Run(int level, int deaths)
         {
+            int timer = 0;
 
             board.PrintFullboard();
             TextHelper.PrintSideText(level, deaths);
 
             var lastUpdate = DateTime.Now;
-            var updateInterval = TimeSpan.FromMilliseconds(80);
+            var updateInterval = TimeSpan.FromMilliseconds(100);
 
             while (!board.GameOver)
             {
@@ -43,15 +44,17 @@ namespace worlds_hardest_game
                 // Only update enemies and redraw every 100ms
                 if (DateTime.Now - lastUpdate >= updateInterval)
                 {
-                    
-                    board.MoveAndPrintEnemies();
+                    Console.ForegroundColor = ConsoleColor.DarkCyan;
+                    Console.SetCursorPosition(63, 15);
+                    Console.WriteLine("Seconds elapsed: " + ++timer/10 + "." + timer%10);
 
+                    board.MoveAndPrintEnemies();
                     board.Player.Immunity--;
                     lastUpdate = DateTime.Now;
                 }
             }
 
-            return board.IsLevelCompleted;
+            return (board.IsLevelCompleted, timer);
         }
 
     }

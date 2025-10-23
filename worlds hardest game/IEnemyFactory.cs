@@ -28,5 +28,35 @@ namespace worlds_hardest_game
         }
     }
 
+    public class DVDFactory : IEnemyFactory
+    {
+        public ICharacter CreateEnemy(int x, int y, char symbol, Board board)
+        {
+            return new BasicEnemy(x, y, symbol, new DVDMovement(board));
+        }
+    }
+
+    public class RandomFactory : IEnemyFactory
+    {
+        Random rand = new Random();
+        public ICharacter CreateEnemy(int x, int y, char symbol, Board board)
+        {
+            switch (rand.Next(1, 4))
+            {
+                case 1:
+                    return new BasicEnemy(x, y, symbol, new SideToSideMovement(board));
+                case 2:
+                    return new BasicEnemy(x, y, symbol, new UpAndDownMovement(board));
+                case 3:
+                    return new BasicEnemy(x, y, symbol, new DVDMovement(board));
+                case 4:
+                    return new BasicEnemy(x, y, symbol, new DVDMovement(board));
+                default:
+                    return new BasicEnemy(x, y, symbol, new DVDMovement(board));
+
+            }            
+        }
+    }
+
 }
 
