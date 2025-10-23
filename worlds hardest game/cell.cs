@@ -95,7 +95,7 @@ namespace worlds_hardest_game
         public Freeze(int duration) => this.duration = duration;
         public void ApplyEffect(Board board)
         {
-            board.FreezeEnemies(duration);
+            board.FreezeNearbyEnemies();
             board.FixCell();
         }
         public char Symbol => '‡';

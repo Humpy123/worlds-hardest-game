@@ -19,10 +19,10 @@ namespace worlds_hardest_game
         private IEnemyFactory factory;
 
         public int CoinCount { get; set; }
-        public int Frozen { get; set; }
         public bool IsLevelCompleted { get; private set; }
         public bool GameOver { get; private set; } = false;
         public Player Player { get; private set; }
+        public EnemyGroup enemyGroup { get; set; }
 
 
         public Board(int width, int height, IEnemyFactory factory)
@@ -31,7 +31,8 @@ namespace worlds_hardest_game
             this.height = height;
             this.factory = factory;
             cells = new ICell[width, height];
-            Player = new Player('■', new PlayerMovement(), ConsoleColor.DarkRed);        
+            Player = new Player('■', new PlayerMovement(), ConsoleColor.DarkRed);
+            enemyGroup = new EnemyGroup(enemies);
 
             // Initialize all cells as wall objects
             for (int x = 0; x < width; x++)
@@ -91,36 +92,43 @@ namespace worlds_hardest_game
         {
             var enemy = factory.CreateEnemy(x, y, '●', this);
             enemies.Add(enemy);
+            new EnemyGroup(enemies);
         }
 
         // Check for enemy collission
         public void CheckEnemyCollision()
         {
-            foreach (ICharacter enemy in enemies)
+            var allOpps = enemyGroup.GetEnumerator();
+            while (allOpps.MoveNext())
             {
-                 if (enemy.X == Player.X && enemy.Y == Player.Y)
+                var enemy = allOpps.Current;
+
+                if (enemy.X == Player.X && enemy.Y == Player.Y)
                 {
                     if (Player.Immunity <= 0)
                         this.EndGame();
                 }
-            }                            
+            }      
+        }
+
+        public void FreezeNearbyEnemies()
+        {
+            foreach (var enemy in enemyGroup.NearbyEnemies(Player, 10))
+                ((BasicEnemy)enemy).FrozenTimer = 15;
         }
 
         public void MoveAndPrintEnemies()
         {
-            if (Frozen < 0)
+            foreach (var enemy in enemies)
             {
-                foreach (var enemy in enemies)
-                {
-                    enemy.Move(this);
-                    enemy.Print(this);
-                    FixCell(enemy);
-                }
+                enemy.Move(this);
+                enemy.Print(this);
+                FixCell(enemy);
             }
         }
 
-        public void FreezeEnemies(int duration) => Frozen = duration;
-        public void Debug() => Console.WriteLine(Frozen);     
+        //public void FreezeEnemies(int duration) => Frozen = duration;
+        public void Debug() => Console.WriteLine();     
         public bool IsWallAt(int x, int y) => cells[x, y] is Wall;
         public bool IsWallAtOffset(ICharacter character, int dx, int dy) => IsWallAt(character.X + dx, character.Y + dy);
 

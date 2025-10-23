@@ -11,6 +11,11 @@ namespace worlds_hardest_game
         void Move(ICharacter character, Board board);
     }
 
+    public class FrozenMovement : IMoveBehavior
+    {
+        public void Move(ICharacter character, Board board) { }
+    }
+
 
     public class PlayerMovement : IMoveBehavior
     {
@@ -67,6 +72,27 @@ namespace worlds_hardest_game
         private int direction = -1;
 
         public SideToSideMovement(Board board)
+        {
+            this.board = board;
+        }
+
+        public void Move(ICharacter character, Board board)
+        {
+            if (board.IsWallAtOffset(character, direction, 0))
+            {
+                direction *= -1;
+            }
+
+            character.MoveByDelta(direction, 0);
+        }
+    }
+
+    public class DVDMovement : IMoveBehavior
+    {
+        private Board board;
+        private int direction = -1;
+
+        public DVDMovement(Board board)
         {
             this.board = board;
         }

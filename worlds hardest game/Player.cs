@@ -2,6 +2,10 @@
 
 namespace worlds_hardest_game
 {
+    public interface IEnemy
+    {
+
+    }
     public interface ICharacter
     {
         int X { get; set; }
@@ -56,7 +60,7 @@ namespace worlds_hardest_game
         public bool IsAt(int x, int y) => X == x && Y == y;
     }
 
-    public class BasicEnemy : ICharacter
+    public class BasicEnemy : ICharacter, IEnemy
     {
         public int X { get; set; }
         public int Y { get; set; }
@@ -64,8 +68,7 @@ namespace worlds_hardest_game
         public int OldY { get; private set; }
         public char Symbol { get; set; }
         public IMoveBehavior moveBehavior { get; set; }
-
-        private bool frozen = false;
+        public int FrozenTimer = 0;
 
         public BasicEnemy(int x, int y, char symbol, IMoveBehavior moveBehavior)
         {
@@ -75,10 +78,11 @@ namespace worlds_hardest_game
             this.moveBehavior = moveBehavior;
         }
 
-        public void Freeze() => frozen = true;
-        public void UnFreeze() => frozen = false;
-
-        public void Move(Board board) => moveBehavior.Move(this, board);
+        public void Move(Board board)
+        {
+            if(--FrozenTimer < 0)
+                moveBehavior.Move(this, board);
+        }
 
         public void MoveByDelta(int dx, int dy)
         {

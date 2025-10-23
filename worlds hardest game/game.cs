@@ -47,7 +47,6 @@ namespace worlds_hardest_game
                     board.MoveAndPrintEnemies();
 
                     board.Player.Immunity--;
-                    board.Frozen--;
                     lastUpdate = DateTime.Now;
                 }
             }
