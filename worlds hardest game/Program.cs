@@ -12,14 +12,19 @@ namespace worlds_hardest_game
             Console.CursorVisible = false;
             Board board;
             Game game;
-            PlayerFile currentPlayer = new PlayerFile("Tony K");
 
             int timeElapsed = 0;
             int level = 5;
             int deathCount = 0;
             bool gameRunning = true;
 
-           //Scores.InitList();
+            Scores.InitList();
+            TextHelper.PrintLargeTextCentered(TextHelper.IntroLogo, ConsoleColor.DarkCyan, 10);
+            Console.SetCursorPosition(Console.WindowWidth / 2, 18);
+
+            TextHelper.PrintStaggeredText(TextHelper.nameQuery, TextHelper.FindCenterX(TextHelper.nameQuery), 17, ConsoleColor.DarkCyan);
+
+            string playerName = Console.ReadLine();
 
             while (gameRunning)
             {
@@ -80,7 +85,7 @@ namespace worlds_hardest_game
                 else
                     deathCount++;
             }
-            Scores.Add(currentPlayer, timeElapsed);
+            Scores.Add(new PlayerFile(playerName), timeElapsed);
             foreach(var score in Scores.GetHighScores())
             {
                 int scoreInDeciSecs = Convert.ToInt32(score.GameScore);

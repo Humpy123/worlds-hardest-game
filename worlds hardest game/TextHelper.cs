@@ -9,7 +9,6 @@ namespace worlds_hardest_game
 {
     static class TextHelper
     {
-        static public string enterText = "Press enter to start!";
         static public string[] InGameLogo2 = new string[]
         {
             "  __   _       _  __  ___",
@@ -21,6 +20,7 @@ namespace worlds_hardest_game
             "/   (_/ .__) ( ( (__ / \\  ",
             "                          "
         };
+        static public string nameQuery = "Enter your name: ";
 
         static public void PrintCoinCount(int coinCount)
         {
