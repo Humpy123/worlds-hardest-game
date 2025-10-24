@@ -8,18 +8,18 @@ namespace worlds_hardest_game
 {
     public interface IMoveBehavior
     {
-        void Move(ICharacter character, Board board);
+        void Move(CharacterBase character, Board board);
     }
 
     public class FrozenMovement : IMoveBehavior
     {
-        public void Move(ICharacter character, Board board) { }
+        public void Move(CharacterBase character, Board board) { }
     }
 
 
     public class PlayerMovement : IMoveBehavior
     {
-        public void Move(ICharacter character, Board board)
+        public void Move(CharacterBase character, Board board)
         {
             if (Console.KeyAvailable)
             {
@@ -43,16 +43,10 @@ namespace worlds_hardest_game
 
     public class UpAndDownMovement : IMoveBehavior
     {
-        private Board board;
         int count = 0;
         private int direction = -1;
 
-        public UpAndDownMovement(Board board)
-        {
-            this.board = board;
-        }
-
-        public void Move(ICharacter character, Board board)
+        public void Move(CharacterBase character, Board board)
         {
             if (board.IsWallAtOffset(character, 0, direction))
             {
@@ -67,15 +61,10 @@ namespace worlds_hardest_game
 
     public class SideToSideMovement : IMoveBehavior
     {
-        private Board board;
+
         private int direction = -1;
 
-        public SideToSideMovement(Board board)
-        {
-            this.board = board;
-        }
-
-        public void Move(ICharacter character, Board board)
+        public void Move(CharacterBase character, Board board)
         {
             if (board.IsWallAtOffset(character, direction, 0))
             {
@@ -88,16 +77,9 @@ namespace worlds_hardest_game
 
     public class DVDMovement : IMoveBehavior
     {
-        private Board board;
         private int directionX = -1;
         private int directionY = -1;
-
-        public DVDMovement(Board board)
-        {
-            this.board = board;
-        }
-
-        public void Move(ICharacter character, Board board)
+        public void Move(CharacterBase character, Board board)
         {
             if (board.IsWallAtOffset(character, directionX, 0))
             {
@@ -110,6 +92,31 @@ namespace worlds_hardest_game
 
             character.MoveByDelta(directionX, directionY);
         }
-
     }
+
+    public class LargeSideToSideMovement : IMoveBehavior
+    {
+        private int directionX = -1;
+        private bool flipped = false;
+        public void Move(CharacterBase character, Board board)
+        {
+            //if (character is not LargeEnemy)
+               // throw new InvalidOperationException("LargeMovement can only be used with LargeEnemy.");
+
+            LargeEnemy bigBoy = (LargeEnemy)character;
+            foreach (var part in bigBoy.Body)
+            {
+                if (board.IsWallAtOffset(part, directionX, 0) && !flipped)
+                {
+                    directionX *= -1;
+                    flipped = true;
+                }                                 
+            }
+            flipped = false;
+
+            foreach (var part in bigBoy.Body)
+                part.MoveByDelta(directionX, 0);
+        }
+    }
+
 }

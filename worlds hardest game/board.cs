@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,7 +16,7 @@ namespace worlds_hardest_game
         private int width;
         private int height;
         private ICell[,] cells;
-        private List<ICharacter> enemies = new List<ICharacter>();
+        private List<CharacterBase> enemies = new List<CharacterBase>();
         private IEnemyFactory factory;
 
         public int CoinCount { get; set; }
@@ -89,7 +90,7 @@ namespace worlds_hardest_game
             cell.OnEnter(this);
         }
         public void AddEnemy(int x, int y)
-        {
+        {            
             var enemy = factory.CreateEnemy(x, y, '●', this);
             enemies.Add(enemy);
             new EnemyGroup(enemies);
@@ -103,7 +104,7 @@ namespace worlds_hardest_game
             {
                 var enemy = allOpps.Current;
 
-                if (enemy.X == Player.X && enemy.Y == Player.Y)
+                if (enemy.CheckCollision(Player.X, Player.Y))
                 {
                     if (Player.Immunity <= 0)
                         this.EndGame();
@@ -130,7 +131,7 @@ namespace worlds_hardest_game
         //public void FreezeEnemies(int duration) => Frozen = duration;
         public void Debug() => Console.WriteLine();     
         public bool IsWallAt(int x, int y) => cells[x, y] is Wall;
-        public bool IsWallAtOffset(ICharacter character, int dx, int dy) => IsWallAt(character.X + dx, character.Y + dy);
+        public bool IsWallAtOffset(CharacterBase character, int dx, int dy) => IsWallAt(character.X + dx, character.Y + dy);
 
 
         public void FixCell()
@@ -143,7 +144,7 @@ namespace worlds_hardest_game
 
             PrintCellAt(Player.X, Player.Y);
         }
-        private void FixCell(ICharacter character) => PrintCellAt(character.OldX, character.OldY);
+        private void FixCell(CharacterBase character) => PrintCellAt(character.OldX, character.OldY);
         public void PrintCellAt (int x, int y)
         {
             Console.SetCursorPosition(x, y);

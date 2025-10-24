@@ -7,33 +7,33 @@ using System.Threading.Tasks;
 
 namespace worlds_hardest_game
 {
-    public class EnemyGroup : IEnumerable<ICharacter>
+    public class EnemyGroup : IEnumerable<CharacterBase>
     {
-        private List<ICharacter> enemyList;
+        private List<CharacterBase> enemyList;
 
-        public EnemyGroup(List<ICharacter> list)
+        public EnemyGroup(List<CharacterBase> list)
         {
             enemyList = list;
         }
 
-        public IEnumerator<ICharacter> GetEnumerator() => new EnemyEnum(enemyList);
+        public IEnumerator<CharacterBase> GetEnumerator() => new EnemyEnum(enemyList);
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-        public IEnumerable<ICharacter> NearbyEnemies(Player player, int radius)
+        public IEnumerable<CharacterBase> NearbyEnemies(Player player, int radius)
         {
             return enemyList.Where(e => Distance(e, player) <= radius);
         }
 
-        private int Distance(ICharacter a, ICharacter b) => Math.Abs(a.X - b.X) + Math.Abs(a.Y - b.Y);
+        private int Distance(CharacterBase a, CharacterBase b) => Math.Abs(a.X - b.X) + Math.Abs(a.Y - b.Y);
 
 
     }
 
-    public class EnemyEnum : IEnumerator<ICharacter>
+    public class EnemyEnum : IEnumerator<CharacterBase>
     {
-        public List<ICharacter> enemyList;
+        public List<CharacterBase> enemyList;
         private int index = -1;
-        public EnemyEnum(List<ICharacter> enemyList)
+        public EnemyEnum(List<CharacterBase> enemyList)
         {
             this.enemyList = enemyList;
         }
@@ -47,7 +47,7 @@ namespace worlds_hardest_game
 
         public void Reset() => index = -1;
 
-        public ICharacter Current => enemyList[index];  
+        public CharacterBase Current => enemyList[index];  
         object IEnumerator.Current => Current;
         public void Dispose() { }
     }

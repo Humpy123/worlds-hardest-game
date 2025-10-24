@@ -8,55 +8,60 @@ namespace worlds_hardest_game
 {
     public interface IEnemyFactory
     {
-        ICharacter CreateEnemy(int x, int y, char symbol, Board board);
+        CharacterBase CreateEnemy(int x, int y, char symbol, Board board);
     }
 
-    public class SideToSideFactory : IEnemyFactory
-    {   
-        
-        public ICharacter CreateEnemy(int x, int y, char symbol, Board board) 
-        {
-            return new BasicEnemy(x, y, symbol, new SideToSideMovement(board));
-        }
-    }
-
-    public class UpAndDownFactory : IEnemyFactory
+    public class BasicEnemyFactory : IEnemyFactory
     {
-        public ICharacter CreateEnemy(int x, int y, char symbol, Board board)
-        {
-            return new BasicEnemy(x, y, symbol, new UpAndDownMovement(board));
-        }
-    }
+        private Type moveBehaviorType;
 
-    public class DVDFactory : IEnemyFactory
-    {
-        public ICharacter CreateEnemy(int x, int y, char symbol, Board board)
+        public BasicEnemyFactory(IMoveBehavior moveBehavior)
         {
-            return new BasicEnemy(x, y, symbol, new DVDMovement(board));
+            moveBehaviorType = moveBehavior.GetType();
+        }
+
+        public CharacterBase CreateEnemy(int x, int y, char symbol, Board board)
+        {
+            IMoveBehavior newBehavior = (IMoveBehavior)Activator.CreateInstance(moveBehaviorType);
+            return new BasicEnemy(x, y, symbol, newBehavior);
         }
     }
 
     public class RandomFactory : IEnemyFactory
     {
         Random rand = new Random();
-        public ICharacter CreateEnemy(int x, int y, char symbol, Board board)
+        public CharacterBase CreateEnemy(int x, int y, char symbol, Board board)
         {
             switch (rand.Next(1, 4))
             {
                 case 1:
-                    return new BasicEnemy(x, y, symbol, new SideToSideMovement(board));
+                    return new BasicEnemy(x, y, symbol, new SideToSideMovement());
                 case 2:
-                    return new BasicEnemy(x, y, symbol, new UpAndDownMovement(board));
+                    return new BasicEnemy(x, y, symbol, new UpAndDownMovement());
                 case 3:
-                    return new BasicEnemy(x, y, symbol, new DVDMovement(board));
+                    return new BasicEnemy(x, y, symbol, new DVDMovement());
                 case 4:
-                    return new BasicEnemy(x, y, symbol, new DVDMovement(board));
+                    return new BasicEnemy(x, y, symbol, new DVDMovement());
                 default:
-                    return new BasicEnemy(x, y, symbol, new DVDMovement(board));
+                    return new BasicEnemy(x, y, symbol, new DVDMovement());
 
             }            
         }
     }
 
+    public class LargeEnemyFactory : IEnemyFactory
+    {
+        private Type moveBehaviorType;
+        public LargeEnemyFactory(IMoveBehavior moveBehavior)
+        {
+            moveBehaviorType = moveBehavior.GetType();
+        }
+
+        public CharacterBase CreateEnemy(int x, int y, char symbol, Board board)
+        {
+            IMoveBehavior newBehavior = (IMoveBehavior)Activator.CreateInstance(moveBehaviorType);
+            return new LargeEnemy(x, y, symbol, newBehavior, ConsoleColor.DarkMagenta);
+        }
+    }
 }
 

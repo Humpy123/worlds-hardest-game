@@ -33,23 +33,25 @@
             var level = new LevelCreator(board);
             board.SetPlayerPos(11, 15);
 
+
             level.MakeRectangle<Empty>(4, 10, 15, 20);
             level.MakeRectangle<EndZone>(45, 10, 56, 20);
             level.MakeRectangle<Empty>(18, 11, 42, 19);
             level.MakeRectangle<Empty>(14, 20, 20, 20);
             level.MakeRectangle<Empty>(40, 10, 44, 10);
 
-            board.CoinCount = 1;
+            board.CoinCount = 0;
             var coin = new GenericPickup<Coin>();
             board.SetCell(coin, 30, 15);
-
+            /*
             for (int i = 12; i <= 18; i++)
             {
                 if (i % 2 == 0)
                     board.AddEnemy(42, i);
                 else
                     board.AddEnemy(18, i);
-            }
+            }*/
+            board.AddEnemy(30, 15);
 
             board.SetPlayerPos(11, 15);
         }

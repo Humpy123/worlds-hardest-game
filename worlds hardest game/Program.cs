@@ -14,17 +14,17 @@ namespace worlds_hardest_game
             Game game;
 
             int timeElapsed = 0;
-            int level = 5;
+            int level = 1;
             int deathCount = 0;
             bool gameRunning = true;
 
             Scores.InitList();
-            TextHelper.PrintLargeTextCentered(TextHelper.IntroLogo, ConsoleColor.DarkCyan, 10);
-            Console.SetCursorPosition(Console.WindowWidth / 2, 18);
+           // TextHelper.PrintLargeTextCentered(TextHelper.IntroLogo, ConsoleColor.DarkCyan, 10);
+          //  Console.SetCursorPosition(Console.WindowWidth / 2, 18);
 
-            TextHelper.PrintStaggeredText(TextHelper.nameQuery, TextHelper.FindCenterX(TextHelper.nameQuery), 17, ConsoleColor.DarkCyan);
+            //TextHelper.PrintStaggeredText(TextHelper.nameQuery, TextHelper.FindCenterX(TextHelper.nameQuery), 17, ConsoleColor.DarkCyan);
 
-            string playerName = Console.ReadLine();
+            //string playerName = Console.ReadLine();
 
             while (gameRunning)
             {
@@ -32,34 +32,34 @@ namespace worlds_hardest_game
                 switch (level)
                 {
                     case 1:
-                        board = new Board(60, 30, new SideToSideFactory());
+                        board = new Board(60, 30, new LargeEnemyFactory(new LargeSideToSideMovement()));
                         game = new Game(board, level);
                         var gameResult = game.Run(level, deathCount);
                         completed = gameResult.completed;
                         timeElapsed += gameResult.timeSpent;
                         break;
                     case 2:
-                        board = new Board(60, 30, new UpAndDownFactory());
+                        board = new Board(60, 30, new BasicEnemyFactory(new UpAndDownMovement()));
                         game = new Game(board, level);
                         gameResult = game.Run(level, deathCount);
                         completed = gameResult.completed;
                         timeElapsed += gameResult.timeSpent;
                         break;
                     case 3:
-                        board = new Board(60, 30, new UpAndDownFactory());
+                        board = new Board(60, 30, new BasicEnemyFactory(new UpAndDownMovement()));
                         game = new Game(board, level);
                         gameResult = game.Run(level, deathCount);
                         completed = gameResult.completed;
                         timeElapsed += gameResult.timeSpent;
                         break;
                     case 4:
-                        board = new Board(60, 30, new UpAndDownFactory());
+                        board = new Board(60, 30, new BasicEnemyFactory(new UpAndDownMovement()));
                         game = new Game(board, level);
                         gameResult = game.Run(level, deathCount);
                         completed = gameResult.completed;
                         timeElapsed += gameResult.timeSpent;
                         break;
-                    case 5:
+                    /*case 5:
                         BoardFetcher boardFetcher = new BoardFetcher();
                         board = boardFetcher.ReadImage(@"C:\Users\olive\source\repos\worlds hardest game\worlds hardest game\assets\boards\test.png");
                         game = new Game(board, level);
@@ -74,7 +74,7 @@ namespace worlds_hardest_game
                         gameResult = game.Run(level, deathCount);
                         completed = gameResult.completed;
                         timeElapsed += gameResult.timeSpent;
-                        break;
+                        break;*/
                     default:
                         gameRunning = false;
                         break;
@@ -85,7 +85,7 @@ namespace worlds_hardest_game
                 else
                     deathCount++;
             }
-            Scores.Add(new PlayerFile(playerName), timeElapsed);
+            Scores.Add(new PlayerFile(""), timeElapsed);
             foreach(var score in Scores.GetHighScores())
             {
                 int scoreInDeciSecs = Convert.ToInt32(score.GameScore);
