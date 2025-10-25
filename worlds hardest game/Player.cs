@@ -18,17 +18,6 @@ namespace worlds_hardest_game
         public virtual bool CheckCollision(int x, int y)
             => (x == this.X && y == this.Y);
 
-        public void FixCell(Board board)
-        {
-            board.SetCell(
-                new Empty { Color = ColorHelper.GetCheckerColor(X, Y) },
-                X,
-                Y
-            );
-
-            board.PrintCellAt(X, Y);
-        }
-
         public virtual void Move(Board board) => moveBehavior.Move(this, board);
         public virtual void Print(Board board) { }
         public void MoveByDelta(int dx, int dy)
@@ -65,7 +54,7 @@ namespace worlds_hardest_game
             Console.SetCursorPosition(X, Y);
             Console.Write(Symbol.ToString());
 
-            //FixCell(board);
+            board.PrintCellAt(this.OldX, this.OldY);
         }
     }
 
@@ -90,7 +79,7 @@ namespace worlds_hardest_game
             Console.SetCursorPosition(X, Y);
             Console.Write(Symbol.ToString());
 
-            //FixCell(board);
+            board.PrintCellAt(this.OldX, this.OldY);
         }
     }
 
@@ -112,7 +101,7 @@ namespace worlds_hardest_game
 
         public override void Move(Board board)
         {
-            moveBehavior.Move(this, board);
+            moveBehavior.MoveGroup(this.Body, board);
         }
 
         public override void Print(Board board)

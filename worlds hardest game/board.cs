@@ -75,7 +75,6 @@ namespace worlds_hardest_game
         public void PrintPlayer()
         {
             Player.Print(this);
-            FixCell(Player);
         }
 
         // Check for player collision with cell
@@ -124,7 +123,6 @@ namespace worlds_hardest_game
             {
                 enemy.Move(this);
                 enemy.Print(this);
-                FixCell(enemy);
             }
         }
 
@@ -141,10 +139,8 @@ namespace worlds_hardest_game
                 Player.X,
                 Player.Y
             );
-
             PrintCellAt(Player.X, Player.Y);
         }
-        private void FixCell(CharacterBase character) => PrintCellAt(character.OldX, character.OldY);
         public void PrintCellAt (int x, int y)
         {
             Console.SetCursorPosition(x, y);

@@ -32,7 +32,7 @@ namespace worlds_hardest_game
                 switch (level)
                 {
                     case 1:
-                        board = new Board(60, 30, new LargeEnemyFactory(new LargeSideToSideMovement()));
+                        board = new Board(60, 30, new LargeEnemyFactory(new DVDMovement()));
                         game = new Game(board, level);
                         var gameResult = game.Run(level, deathCount);
                         completed = gameResult.completed;
