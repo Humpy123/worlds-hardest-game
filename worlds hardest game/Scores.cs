@@ -9,34 +9,27 @@ namespace worlds_hardest_game
 {
     static class Scores
     {
-        static public void InitList()
-            => SerializeList(new List<PlayerFile>(), @"..\..\..\assets\highscores\highscores.json");
-        static private void SerializeList(List<PlayerFile> list, string filePath)
+        static private string filePath = @"..\..\..\assets\highscores\highscores.json";
+        static private void SerializeList(List<PlayerFile> list)
         {
             string json = JsonSerializer.Serialize(list);
             File.WriteAllText(filePath, json);
         }
         static public void Add(PlayerFile player, int timeElapsed)
         {
-            string filePath = @"..\..\..\assets\highscores\highscores.json";
-            List<PlayerFile> playerList = new List<PlayerFile>();
+            if (!File.Exists(filePath)) 
+                SerializeList(new List<PlayerFile>());
 
-            if (File.Exists(filePath))
-            {
-                string json = File.ReadAllText(filePath);
-                playerList = JsonSerializer.Deserialize<List<PlayerFile>>(json) ?? new List<PlayerFile>();
-            }
-
-
+            string json = File.ReadAllText(filePath);
+            var playerList = JsonSerializer.Deserialize<List<PlayerFile>>(json) ?? new List<PlayerFile>();
             player.GameScore = timeElapsed.ToString();
             playerList.Add(player);
-            string newJson = JsonSerializer.Serialize(playerList);
-            File.WriteAllText(filePath, newJson);
+
+            SerializeList(playerList);
         }
 
         static public List<PlayerFile> GetHighScores()
         {
-            string filePath = @"..\..\..\assets\highscores\highscores.json";
             if (File.Exists(filePath))
             {
                 string json = File.ReadAllText(filePath);

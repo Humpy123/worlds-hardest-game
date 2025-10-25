@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using System.Runtime.InteropServices.Marshalling;
-/*
+
 namespace worlds_hardest_game
 {
     /// <summary>
@@ -18,7 +18,7 @@ namespace worlds_hardest_game
         Bitmap image;
         public Board ReadImage(string link)
         {
-            Board createdBoard = new Board(60, 30, new UpAndDownFactory());
+            Board createdBoard = new Board(60, 30, new BasicEnemyFactory(new SideToSideMovement()));
             for (int y = 0; y < 30; y++)
             {
                 image = new Bitmap(link);
@@ -67,4 +67,3 @@ namespace worlds_hardest_game
 
     }
 }
-*/
