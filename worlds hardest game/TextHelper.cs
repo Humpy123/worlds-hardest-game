@@ -51,6 +51,7 @@ namespace worlds_hardest_game
             PrintLargeText(artLines, color, startPoint, y);
         }
         static public Func<string, int> FindCenterX = s => (Console.WindowWidth / 2) - (s.Length / 2);
+        static public Func<string[], int> FindCenterY = arr => (Console.WindowHeight / 2) - (arr.Length / 2);
         static public void PrintStaggeredText(string s, int x, int y, ConsoleColor color, int delayMs)
         {
             Console.SetCursorPosition(x, y);
@@ -90,9 +91,9 @@ namespace worlds_hardest_game
                 string totalScore = (scoreInDeciSecs / 10 + "." + scoreInDeciSecs % 10);
 
                 TextHelper.PrintStaggeredText
-                    (playerScore.Name, Console.WindowWidth / 2 - 15, ++scoreYCoord, ConsoleColor.DarkCyan, 10);
+                    (playerScore.Name, Console.WindowWidth / 2 - 10, ++scoreYCoord, ConsoleColor.DarkCyan, 10);
                 TextHelper.PrintStaggeredText
-                    (totalScore, Console.WindowWidth / 2 + 15, scoreYCoord, ConsoleColor.DarkCyan, 10);
+                    (totalScore, Console.WindowWidth / 2 + 10, scoreYCoord, ConsoleColor.DarkCyan, 10);
                 Console.WriteLine();
             }
         }

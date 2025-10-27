@@ -6,6 +6,11 @@ namespace worlds_hardest_game
     {
         bool CheckCollision(int x, int y);
     }
+
+    // 1: Strategy Pattern
+    // 2.1: CharacterBase delegerar till IMoveBehavior
+    // 2.2: PlayerMovement och DVDMovement är exempel på implementationer.
+    // 3:
     public abstract class CharacterBase
     {
         public int X { get; set; }

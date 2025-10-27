@@ -119,6 +119,32 @@ namespace worlds_hardest_game
 
     }
 
+    public class TimeBasedEnemyFactory : IEnemyFactory
+    {
+        private Func<int> getGameTime;
+
+        public TimeBasedEnemyFactory(Func<int> timeProvider)
+        {
+            getGameTime = timeProvider;
+        }
+
+        public CharacterBase CreateEnemy(int x, int y, char symbol, Board board)
+        {
+            int time = getGameTime();
+            IMoveBehavior behavior = time switch
+            {
+                < 100 => new FrozenMovement(),
+                < 200 => new SideToSideMovement(),
+                < 300 => new UpAndDownMovement(),
+                _ => new DVDMovement()
+            };
+
+            return new BasicEnemy(x, y, symbol, behavior);
+        }
+    }
+
+
+
     /*
     public class LargeSideToSideMovement : IMoveBehavior
         {
@@ -145,5 +171,5 @@ namespace worlds_hardest_game
             }
             public void MoveGroup(CharacterBase[] enemyGroup, Board board) { }
         }*/
-    
+
 }

@@ -44,9 +44,9 @@ namespace worlds_hardest_game
             bool gameRunning = true;
 
 
-            // Fetch player name, limit to 30 characters
+            //Fetch player name, limit to 20 characters
             string nameInput = PlayIntro();
-            string playerName = nameInput.Length > 30 ? nameInput.Substring(0, 30) : nameInput;
+            string playerName = nameInput.Length > 20 ? nameInput.Substring(0, 30) : nameInput;
 
             while (gameRunning)
             {
@@ -68,7 +68,7 @@ namespace worlds_hardest_game
                         timeElapsed += gameResult.timeSpent;
                         break;
                     case 3:
-                        board = new Board(60, 30, new BasicEnemyFactory(new UpAndDownMovement()));
+                        board = new Board(60, 30, new BasicEnemyFactory(new DVDMovement()));
                         game = new Game(board, level);
                         gameResult = game.Run(level, deathCount);
                         completed = gameResult.completed;
@@ -110,27 +110,25 @@ namespace worlds_hardest_game
             // Add player to scores file
             Scores.Add(new PlayerFile(playerName), timeElapsed);
 
-
-
-
-
             // Print high scores
             Console.Clear();
             string hs = "High Scores";
             TextHelper.PrintStaggeredText(hs, TextHelper.FindCenterX(hs), 5, ConsoleColor.DarkCyan, 10);
             TextHelper.PrintHighScores();
 
-
-            File.WriteAllLines(@"..\..\..\assets\asciiart\InGameLogo2.txt", TextHelper.InGameLogo2);
-            File.WriteAllLines(@"..\..\..\assets\asciiart\IntroLogo.txt", TextHelper.IntroLogo);
-
+            // Print game logo
+            TextHelper.PrintLargeText
+                (TextHelper.InGameLogo2,
+                 ConsoleColor.DarkCyan,
+                (Console.WindowWidth / 2 - 60),
+                 TextHelper.FindCenterY(TextHelper.InGameLogo2));
 
             // Run cube animation again
             var cts = new CancellationTokenSource();
             var cubeAnimation = TextHelper.RunCubeAnimation
-               (cts.Token, (Console.WindowWidth / 2 - 60), 8, 0, 0);
+               (cts.Token, (Console.WindowWidth-40), 8, 0, 0);
 
-            Console.ReadLine();
+            Console.ReadKey();
         }
     }
 }

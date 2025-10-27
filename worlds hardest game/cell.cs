@@ -105,7 +105,10 @@ namespace worlds_hardest_game
 
 
 
-
+    // 1: Generics
+    // 2: En generisk klass som wrappar celler som agerar som powerups.
+    // 3: Logiken för powerupens effekt sitter i själva pickupen, och inte i cellen.
+    // 3: Tillåter oss att hantera alla pickups med samma logik, tar bort conditionals.
     public class GenericPickup<T> : ICell where T : ICollectible, ICell, new()
     {
         public T Item { get; set; } = new T();
