@@ -29,23 +29,31 @@ namespace worlds_hardest_game
 
     public class RandomFactory : IEnemyFactory
     {
-        Random rand = new Random();
-        public CharacterBase CreateEnemy(int x, int y, char symbol, Board board)
+        private IMoveBehavior getRandomMovebehavior()
         {
+            Random rand = new Random();
             switch (rand.Next(1, 4))
             {
                 case 1:
-                    return new BasicEnemy(x, y, symbol, new SideToSideMovement());
+                    return new SideToSideMovement();
                 case 2:
-                    return new BasicEnemy(x, y, symbol, new UpAndDownMovement());
+                    return new UpAndDownMovement();
                 case 3:
-                    return new BasicEnemy(x, y, symbol, new DVDMovement());
-                case 4:
-                    return new BasicEnemy(x, y, symbol, new DVDMovement());
+                    return new DVDMovement();
                 default:
-                    return new BasicEnemy(x, y, symbol, new DVDMovement());
+                    throw new Exception("how");
+            }
+        }
+        Random rand = new Random();
+        public CharacterBase CreateEnemy(int x, int y, char symbol, Board board)
+        {
+            int num = rand.Next();
 
-            }            
+            if (num % 4 == 0)
+                return new LargeEnemy(x, y, symbol, getRandomMovebehavior(), ConsoleColor.DarkMagenta);
+            else
+                return new BasicEnemy(x, y, symbol, getRandomMovebehavior());
+       
         }
     }
 

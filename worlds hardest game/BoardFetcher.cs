@@ -18,10 +18,11 @@ namespace worlds_hardest_game
         Bitmap image;
         public Board ReadImage(string link)
         {
-            Board createdBoard = new Board(60, 30, new BasicEnemyFactory(new SideToSideMovement()));
+            Board createdBoard = new Board(60, 30, new List<IEnemyFactory>());
+            image = new Bitmap(link);
             for (int y = 0; y < 30; y++)
             {
-                image = new Bitmap(link);
+                
                 for (int x = 0; x < 60; x++)
                 {
                     Color pixelColor = image.GetPixel(x, y);
@@ -35,13 +36,22 @@ namespace worlds_hardest_game
                         case ICell:
                             createdBoard.SetCell((ICell)pixel, x, y);
                             break;
-                        case 1:
-                            createdBoard.AddEnemy(x, y);
-                            createdBoard.SetCell(new Empty(), x, y);
-                            break;
-                        case 2:
+                        case "PLAYER":
                             createdBoard.SetPlayerPos(x, y);
                             createdBoard.SetCell(new Empty(), x, y);
+                            break;
+                        case "COIN":
+                            createdBoard.SetCell(new Empty(), x, y);
+                            createdBoard.SetCell(new GenericPickup<Coin>(), x, y);
+                            createdBoard.CoinCount++;
+                            break;
+                        case "FREEZE":
+                            createdBoard.SetCell(new Empty(), x, y);
+                            createdBoard.SetCell(new GenericPickup<Freeze>(), x, y);
+                            break;
+                        case "SHIELD":
+                            createdBoard.SetCell(new Empty(), x, y);
+                            createdBoard.SetCell(new GenericPickup<Shield>(), x, y);
                             break;
                     }                                             
                 }
@@ -56,9 +66,9 @@ namespace worlds_hardest_game
                 case "#0000FF": return new Wall();       // Blue
                 case "#FFFFFF": return new Empty();      // White
                 case "#00FF00": return new EndZone();    // Green
-                case "#FFFF00": return new Coin();
-                case "#FF0000": return 1;                // Red (enemy)
-                case "#000000": return 2;                // Black (player)
+                case "#FFFF00": return "COIN";
+                case "#00FFFF": return "FREEZE";
+                case "#000000": return "PLAYER";                // Black (player)
 
                 default:
                     throw new Exception($"Invalid color in image: {hex}");

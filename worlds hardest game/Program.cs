@@ -39,7 +39,7 @@ namespace worlds_hardest_game
             Game game;
 
             int timeElapsed = 0;
-            int level = 1;
+            int level = 5;
             int deathCount = 0;
             bool gameRunning = true;
 
@@ -54,45 +54,31 @@ namespace worlds_hardest_game
                 switch (level)
                 {
                     case 1:
-                        board = new Board(60, 30, new LargeEnemyFactory(new DVDMovement()));
-                        game = new Game(board, level);
+                        game = new Game(level);
                         var gameResult = game.Run(level, deathCount);
                         completed = gameResult.completed;
                         timeElapsed += gameResult.timeSpent;
                         break;
                     case 2:
-                        board = new Board(60, 30, new BasicEnemyFactory(new UpAndDownMovement()));
-                        game = new Game(board, level);
+                        game = new Game(level);
                         gameResult = game.Run(level, deathCount);
                         completed = gameResult.completed;
                         timeElapsed += gameResult.timeSpent;
                         break;
                     case 3:
-                        board = new Board(60, 30, new BasicEnemyFactory(new DVDMovement()));
-                        game = new Game(board, level);
+                        game = new Game(level);
                         gameResult = game.Run(level, deathCount);
                         completed = gameResult.completed;
                         timeElapsed += gameResult.timeSpent;
                         break;
-                    case 4:
-                        board = new Board(60, 30, new BasicEnemyFactory(new UpAndDownMovement()));
-                        game = new Game(board, level);
+                    case 4: 
+                        game = new Game(level);
                         gameResult = game.Run(level, deathCount);
                         completed = gameResult.completed;
                         timeElapsed += gameResult.timeSpent;
                         break;
                     case 5:
-                        BoardFetcher boardFetcher = new BoardFetcher();
-                        board = boardFetcher.ReadImage(@"C:\Users\olive\source\repos\worlds hardest game\worlds hardest game\assets\boards\test.png");
-                        game = new Game(board, level);
-                        gameResult = game.Run(level, deathCount);
-                        completed = gameResult.completed;
-                        timeElapsed += gameResult.timeSpent;
-                        break;
-                    case 7:
-                        boardFetcher = new BoardFetcher();
-                        board = boardFetcher.ReadImage(@"C:\Users\olive\source\repos\worlds hardest game\worlds hardest game\assets\boards\level1.png");
-                        game = new Game(board, level);
+                        game = new Game(level);
                         gameResult = game.Run(level, deathCount);
                         completed = gameResult.completed;
                         timeElapsed += gameResult.timeSpent;

@@ -17,7 +17,7 @@ namespace worlds_hardest_game
         private int height;
         private ICell[,] cells;
         private List<CharacterBase> enemies = new List<CharacterBase>();
-        private IEnemyFactory factory;
+        private List<IEnemyFactory> factories;
 
         public int CoinCount { get; set; }
         public bool IsLevelCompleted { get; private set; }
@@ -25,12 +25,11 @@ namespace worlds_hardest_game
         public Player Player { get; private set; }
         public EnemyGroup enemyGroup { get; set; }
 
-
-        public Board(int width, int height, IEnemyFactory factory)
+        public Board(int width, int height, List<IEnemyFactory> factories)
         {
             this.width = width;
             this.height = height;
-            this.factory = factory;
+            this.factories = factories;
             cells = new ICell[width, height];
             Player = new Player('■', new PlayerMovement(), ConsoleColor.DarkRed);
             enemyGroup = new EnemyGroup(enemies);
@@ -40,6 +39,9 @@ namespace worlds_hardest_game
                 for (int y = 0; y < height; y++)
                     cells[x, y] = new Wall();
         }
+
+        public void AddFactory(IEnemyFactory factory) => factories.Add(factory);
+
         public void PrintFullboard()
         {
             Console.Clear();
@@ -88,9 +90,9 @@ namespace worlds_hardest_game
 
             cell.OnEnter(this);
         }
-        public void AddEnemy(int x, int y)
-        {            
-            var enemy = factory.CreateEnemy(x, y, '●', this);
+        public void AddEnemy(int x, int y, char symbol, int factoryIndex)
+        {
+            var enemy = factories[factoryIndex].CreateEnemy(x, y, symbol, this);
             enemies.Add(enemy);
             new EnemyGroup(enemies);
         }

@@ -24,19 +24,5 @@ namespace worlds_hardest_game
                 }
             }
         }
-
-        public void SpawnAlternatingEnemies(int start, int stop, int spacing)
-        {
-            for (int i = start; i <= stop; i++)
-            {
-                if (i % 2 == 0)
-                    board.AddEnemy(i * spacing, 12);
-                else
-                    board.AddEnemy(i * spacing, 19);
-            }
-        }
-
-
-
     }
 }

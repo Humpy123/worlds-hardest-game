@@ -12,10 +12,9 @@ namespace worlds_hardest_game
     {
         private Board board;
 
-        public Game(Board board, int level)
+        public Game(int level)
         {
-            this.board = board;
-            LevelManager.SetupLevel(this.board, level);
+            this.board = LevelManager.SetupLevel(level);
         }
 
         public (bool completed, int timeSpent) Run(int level, int deaths)
