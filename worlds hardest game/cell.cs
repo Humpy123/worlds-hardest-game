@@ -20,26 +20,13 @@ namespace worlds_hardest_game
 
         public void ChangeColor(ConsoleColor color) => this.Color = color;
     }
-    public class Obstacle : ICell
-    {
-        public void OnEnter(Board board) { }
-
-        public char Symbol => 'O';
-        public ConsoleColor Color { get; set; }
-    }
+    
     public class Wall : ICell
     {
         public void OnEnter(Board board) { }
         public char Symbol => '█';
         public ConsoleColor Color { get; set; } = ConsoleColor.Cyan;
 
-    }
-
-    public class StartZone : ICell
-    {
-        public void OnEnter(Board board) { }
-        public char Symbol => '█';
-        public ConsoleColor Color { get; set; } = ConsoleColor.Green;
     }
 
     public class EndZone : ICell
