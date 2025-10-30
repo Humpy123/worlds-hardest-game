@@ -90,12 +90,12 @@ namespace worlds_hardest_game
         public void OnEnter(Board board) => ApplyEffect(board);
     }
 
-
-
+    
+    // KRAV #1:
     // 1: Generics
-    // 2: En generisk klass som wrappar celler som agerar som powerups.
-    // 3: Logiken för powerupens effekt sitter i själva pickupen, och inte i cellen.
-    // 3: Tillåter oss att hantera alla pickups med samma logik, tar bort conditionals.
+    // 2: En generisk klass som wrappar de celler som agerar som powerups.
+    // 3: Effekten av pickupen ligger i typen T, vilket ger flexibilitet och återanvändbarhet.
+    // 3: Tillåter enhetling hantering av pickups utan conditionals eller specialfall.
     public class GenericPickup<T> : ICell where T : ICollectible, ICell, new()
     {
         public T Item { get; set; } = new T();
