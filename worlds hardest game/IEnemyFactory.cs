@@ -6,6 +6,12 @@ using System.Threading.Tasks;
 
 namespace worlds_hardest_game
 {
+    //Krav #4:
+    // 1: Factory Method Pattern
+    // 2: Vi använder en fabrikshierarki där IEnemyFactory är supertypen och har tre konkretioner BasicEnemyFactory, RandomFactory och LargeEnemyFactory. 
+    //  Varje factory skapar olika typer av produkter från supertypen CharacterBase med olika rörelsebeteenden.
+    //  Fabrikerna injiceras sedan och används för att skapa fiender vilket gör att objekten inte lika gärna hade kunnat skapas utan fabriken.
+    // 3: Vi använder Factory Method Pattern för att möjliggöra flexibelt och utbyggbart skapande av fiender med olika beteenden på olika nivåer i spelet.
     public interface IEnemyFactory
     {
         CharacterBase CreateEnemy(int x, int y, char symbol, Board board);
