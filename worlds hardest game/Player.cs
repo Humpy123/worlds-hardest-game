@@ -7,10 +7,13 @@ namespace worlds_hardest_game
         bool CheckCollision(int x, int y);
     }
 
-    // 1: Strategy Pattern
-    // 2.1: CharacterBase delegerar till IMoveBehavior
-    // 2.2: PlayerMovement och DVDMovement är exempel på implementationer.
-    // 3:
+    //Krav #3:
+    // 1: Bridge Pattern
+    // 2: Vi har två abstraktaktioner: CharacterBase (abstraktion för karaktärer) och IMoveBehavior (abstraktion för rörelsebeteenden).
+    //      - CharacterBase har tre konkretioner: Player, basicEnemy och LargeEnemy.
+    //      - IMoveBehavior har flera konkretioner exempelvis: SideToSideMovement och PlayerMovement.
+    // 3: Vi använder bridge pattern för att separera karaktärerna från dess rörelsebeteende. 
+    // Det gör det enkelt att skapa fler karaktärer och rörelsebeteenden och kombinera de som vi vill.
     public abstract class CharacterBase
     {
         public int X { get; set; }
