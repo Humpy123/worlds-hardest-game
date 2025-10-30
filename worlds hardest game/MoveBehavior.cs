@@ -13,12 +13,6 @@ namespace worlds_hardest_game
         void MoveGroup(CharacterBase[] enemyGroup, Board board);
     }
 
-    public class FrozenMovement : IMoveBehavior
-    {
-        public void Move(CharacterBase character, Board board) { }
-        public void MoveGroup(CharacterBase[] enemyGroup, Board board) { }
-    }
-
 
     public class PlayerMovement : IMoveBehavior
     {
@@ -116,60 +110,5 @@ namespace worlds_hardest_game
             foreach (var part in enemyGroup)
                 part.MoveByDelta(directionX, directionY);
         }
-
     }
-
-    public class TimeBasedEnemyFactory : IEnemyFactory
-    {
-        private Func<int> getGameTime;
-
-        public TimeBasedEnemyFactory(Func<int> timeProvider)
-        {
-            getGameTime = timeProvider;
-        }
-
-        public CharacterBase CreateEnemy(int x, int y, char symbol, Board board)
-        {
-            int time = getGameTime();
-            IMoveBehavior behavior = time switch
-            {
-                < 100 => new FrozenMovement(),
-                < 200 => new SideToSideMovement(),
-                < 300 => new UpAndDownMovement(),
-                _ => new DVDMovement()
-            };
-
-            return new BasicEnemy(x, y, symbol, behavior);
-        }
-    }
-
-
-
-    /*
-    public class LargeSideToSideMovement : IMoveBehavior
-        {
-            private int directionX = -1;
-            private bool flipped = false;
-            public void Move(CharacterBase character, Board board)
-            {
-                //if (character is not LargeEnemy)
-                // throw new InvalidOperationException("LargeMovement can only be used with LargeEnemy.");
-
-                LargeEnemy bigBoy = (LargeEnemy)character;
-                foreach (var part in bigBoy.Body)
-                {
-                    if (board.IsWallAtOffset(part, directionX, 0) && !flipped)
-                    {
-                        directionX *= -1;
-                        flipped = true;
-                    }
-                }
-                flipped = false;
-
-                foreach (var part in bigBoy.Body)
-                    part.MoveByDelta(directionX, 0);
-            }
-            public void MoveGroup(CharacterBase[] enemyGroup, Board board) { }
-        }*/
-
 }
