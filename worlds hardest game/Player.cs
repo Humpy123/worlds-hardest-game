@@ -7,13 +7,19 @@ namespace worlds_hardest_game
         bool CheckCollision(int x, int y);
     }
 
-    //Krav #3:
+    // KRAV #3:
     // 1: Bridge Pattern
-    // 2: Vi har två abstraktaktioner: CharacterBase (abstraktion för karaktärer) och IMoveBehavior (abstraktion för rörelsebeteenden).
+    // 2: Vi har två abstraktioner: CharacterBase (abstraktion för karaktärer) och IMoveBehavior (abstraktion för rörelsebeteenden).
     //      - CharacterBase har tre konkretioner: Player, basicEnemy och LargeEnemy.
     //      - IMoveBehavior har flera konkretioner exempelvis: SideToSideMovement och PlayerMovement.
     // 3: Vi använder bridge pattern för att separera karaktärerna från dess rörelsebeteende. 
     // Det gör det enkelt att skapa fler karaktärer och rörelsebeteenden och kombinera de som vi vill.
+
+    // KRAV #2:
+    // 1: Strategy Pattern
+    // 2: Vi definerar ett gemensamt gränssnitt för rörelsebeteende (IMoveBehavior),
+    //    vars implementationer kan injiceras i CharacterBase i konstruktorn.
+    // 3: Detta tillåter oss att variera beteenden för fiendens rörelse utan att ändra klient-koden.
     public abstract class CharacterBase
     {
         public int X { get; set; }
@@ -90,7 +96,7 @@ namespace worlds_hardest_game
             board.PrintCellAt(this.OldX, this.OldY);
         }
     }
-
+                                                                               
     public class LargeEnemy: CharacterBase, IEnemy
     {
         public BasicEnemy[] Body = new BasicEnemy[5];

@@ -11,7 +11,7 @@ namespace worlds_hardest_game
     /// <summary>
     /// Använder externt NuGet package System.Drawing
     /// Denna del har jag kodat för en rolig utmaning.
-    /// Det är inte tänkt som en del av spelet.
+    /// Det är inte tänkt som en del av examinationen.
     /// </summary>
     public class BoardFetcher
     {
