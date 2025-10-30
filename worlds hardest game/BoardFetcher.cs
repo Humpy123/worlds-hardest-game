@@ -66,14 +66,17 @@ namespace worlds_hardest_game
                 case "#0000FF": return new Wall();       // Blue
                 case "#FFFFFF": return new Empty();      // White
                 case "#00FF00": return new EndZone();    // Green
-                case "#FFFF00": return "COIN";
-                case "#00FFFF": return "FREEZE";
-                case "#000000": return "PLAYER";                // Black (player)
+                case "#FFFF00": return "COIN";           // Yellow
+                case "#00FFFF": return "FREEZE";         // Teal 
+                case "#000000": return "PLAYER";         // Black 
+                case "#FF0000": return "SHIELD";         // Red
+                case "#FF00FF":
+                    return new Random().Next(2) == 0 ? "FREEZE" : "SHIELD";
 
                 default:
-                    throw new Exception($"Invalid color in image: {hex}");
+                    throw new Exception
+                        ($"Invalid color in image: {hex}. See README for colors");
             }
         }
-
     }
 }

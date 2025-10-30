@@ -9,11 +9,12 @@ namespace worlds_hardest_game
     public class PlayerFile
     {
         public string Name { get; set; }
-        public string GameScore { get; set; }
-        public PlayerFile(string Name)
+        public int GameScore { get; set; }
+        public PlayerFile() { }
+        public PlayerFile(string Name, int GameScore)
         {
             this.Name = Name;
-            this.GameScore = "0.0";
+            this.GameScore = GameScore;
         }
     }
 

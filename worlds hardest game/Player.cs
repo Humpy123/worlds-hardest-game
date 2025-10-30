@@ -88,7 +88,7 @@ namespace worlds_hardest_game
 
         public override void Print(Board board)
         {
-            Console.ForegroundColor = Immunity > 0 ? ConsoleColor.Blue : ConsoleColor.DarkRed;
+            Console.ForegroundColor = Immunity > 0 ? ConsoleColor.DarkGreen : ConsoleColor.DarkRed;
             Console.BackgroundColor = board.GetCellColor(X, Y);
             Console.SetCursorPosition(X, Y);
             Console.Write(Symbol.ToString());
@@ -133,7 +133,6 @@ namespace worlds_hardest_game
 
         public override bool CheckCollision(int x, int y)
         {
-
             foreach (var part in Body)
                 if (x == part.X && y == part.Y)
                     return true;

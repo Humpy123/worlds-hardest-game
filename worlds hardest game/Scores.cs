@@ -15,14 +15,13 @@ namespace worlds_hardest_game
             string json = JsonSerializer.Serialize(list);
             File.WriteAllText(filePath, json);
         }
-        static public void Add(PlayerFile player, int timeElapsed)
+        static public void Add(PlayerFile player)
         {
             if (!File.Exists(filePath)) 
                 SerializeList(new List<PlayerFile>());
 
             string json = File.ReadAllText(filePath);
             var playerList = JsonSerializer.Deserialize<List<PlayerFile>>(json) ?? new List<PlayerFile>();
-            player.GameScore = timeElapsed.ToString();
             playerList.Add(player);
 
             SerializeList(playerList);
@@ -36,7 +35,7 @@ namespace worlds_hardest_game
                 var scores = JsonSerializer.Deserialize<List<PlayerFile>>(json) ?? new List<PlayerFile>();
 
                 var topPlayers = scores
-                    .OrderBy(p => int.Parse(p.GameScore))
+                    .OrderByDescending(p => p.GameScore)
                     .Take(10)
                     .ToList();
 

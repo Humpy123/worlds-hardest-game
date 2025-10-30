@@ -31,11 +31,17 @@ namespace worlds_hardest_game
             return input;
         }
 
+        static int CalculateScore(int timeInDeciSeconds, int deaths)
+        {
+            int denominator = 1 + timeInDeciSeconds/10 + (deaths * 30);
+            return 50000 / denominator;
+        }
+
          static void Main(string[] args)
          {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
             Console.CursorVisible = false;
-            Game game;
+            RoundSession round;
 
             int timeElapsed = 0;
             int level = 1;
@@ -53,32 +59,32 @@ namespace worlds_hardest_game
                 switch (level)
                 {
                     case 1:
-                        game = new Game(level);
-                        var gameResult = game.Run(level, deathCount);
+                        round = new RoundSession(level);
+                        var gameResult = round.Run(level, deathCount);
                         completed = gameResult.completed;
                         timeElapsed += gameResult.timeSpent;
                         break;
                     case 2:
-                        game = new Game(level);
-                        gameResult = game.Run(level, deathCount);
+                        round = new RoundSession(level);
+                        gameResult = round.Run(level, deathCount);
                         completed = gameResult.completed;
                         timeElapsed += gameResult.timeSpent;
                         break;
                     case 3:
-                        game = new Game(level);
-                        gameResult = game.Run(level, deathCount);
+                        round = new RoundSession(level);
+                        gameResult = round.Run(level, deathCount);
                         completed = gameResult.completed;
                         timeElapsed += gameResult.timeSpent;
                         break;
                     case 4: 
-                        game = new Game(level);
-                        gameResult = game.Run(level, deathCount);
+                        round = new RoundSession(level);
+                        gameResult = round.Run(level, deathCount);
                         completed = gameResult.completed;
                         timeElapsed += gameResult.timeSpent;
                         break;
                     case 5:
-                        game = new Game(level);
-                        gameResult = game.Run(level, deathCount);
+                        round = new RoundSession(level);
+                        gameResult = round.Run(level, deathCount);
                         completed = gameResult.completed;
                         timeElapsed += gameResult.timeSpent;
                         break;
@@ -93,7 +99,20 @@ namespace worlds_hardest_game
                     deathCount++;
             }
             // Add player to scores file
-            Scores.Add(new PlayerFile(playerName), timeElapsed);
+            int playerScore = CalculateScore(timeElapsed, deathCount);
+            Scores.Add(new PlayerFile(playerName, playerScore));
+
+            // Print Player score
+            Console.Clear();
+            string seehighscore = "Press ENTER to see high scores";
+            string welldone =
+                ("Well done, " + playerName + " You completed SQUAREPUSHER with a score of " + playerScore);
+            TextHelper.PrintStaggeredText
+                (welldone, TextHelper.FindCenterX(welldone), 10, ConsoleColor.DarkCyan, 10);
+
+            TextHelper.PrintStaggeredText
+                (seehighscore, TextHelper.FindCenterX(seehighscore), 14, ConsoleColor.DarkCyan, 10);
+            Console.ReadKey();
 
             // Print high scores
             Console.Clear();
@@ -107,11 +126,6 @@ namespace worlds_hardest_game
                  ConsoleColor.DarkCyan,
                  Console.WindowWidth/2-42,
                  TextHelper.FindCenterY(TextHelper.InGameLogo2));
-
-            // Run cube animation again
-            var cts = new CancellationTokenSource();
-            var cubeAnimation = TextHelper.RunCubeAnimation
-               (cts.Token, (Console.WindowWidth/2+20), 8, 0, 0);
 
             Console.ReadKey();
         }

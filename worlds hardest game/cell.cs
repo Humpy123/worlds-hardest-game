@@ -17,8 +17,6 @@ namespace worlds_hardest_game
         public void OnEnter(Board board) { }
         public char Symbol => '█';
         public ConsoleColor Color { get; set; } = ConsoleColor.White;
-
-        public void ChangeColor(ConsoleColor color) => this.Color = color;
     }
     public class Obstacle : ICell
     {
@@ -69,8 +67,7 @@ namespace worlds_hardest_game
         public ConsoleColor Color { get; set; } = ConsoleColor.DarkYellow;
         public void OnEnter(Board board)
         {
-            ApplyEffect(board);
-            
+            ApplyEffect(board);            
         } 
     }
     public class Shield : ICell, ICollectible
@@ -80,8 +77,8 @@ namespace worlds_hardest_game
             board.Player.Immunity = 30;
             board.FixCell();
         }
-        public char Symbol => '●';
-        public ConsoleColor Color { get; set; } = ConsoleColor.Blue;
+        public char Symbol => '¤';
+        public ConsoleColor Color { get; set; } = ConsoleColor.DarkGreen;
         public void OnEnter(Board board)
         {
             ApplyEffect(board);
@@ -98,7 +95,7 @@ namespace worlds_hardest_game
             board.FreezeNearbyEnemies();
             board.FixCell();
         }
-        public char Symbol => '‡';
+        public char Symbol => '*';
         public ConsoleColor Color { get; set; } = ConsoleColor.DarkCyan;
         public void OnEnter(Board board) => ApplyEffect(board);
     }

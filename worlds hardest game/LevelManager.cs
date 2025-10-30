@@ -167,10 +167,10 @@
 
             board.AddEnemy(30, 20, '●', 2);
 
-            board.AddEnemy(49, 22, '●', 3);
-            board.AddEnemy(49, 9, '●', 3);
-            board.AddEnemy(55, 16, '●', 3);
-            board.AddEnemy(43, 16, '●', 3);
+            board.AddEnemy(49, 22, 'X', 3);
+            board.AddEnemy(49, 9, 'X', 3);
+            board.AddEnemy(55, 16, 'X', 3);
+            board.AddEnemy(43, 16, 'X', 3);
 
 
             return board;

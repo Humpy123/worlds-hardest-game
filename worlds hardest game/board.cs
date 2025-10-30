@@ -128,7 +128,6 @@ namespace worlds_hardest_game
             }
         }
 
-        //public void FreezeEnemies(int duration) => Frozen = duration;
         public void Debug() => Console.WriteLine();     
         public bool IsWallAt(int x, int y) => cells[x, y] is Wall;
         public bool IsWallAtOffset(CharacterBase character, int dx, int dy) => IsWallAt(character.X + dx, character.Y + dy);

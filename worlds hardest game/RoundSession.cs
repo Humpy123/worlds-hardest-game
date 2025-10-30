@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace worlds_hardest_game
 {
-    internal class Game
+    internal class RoundSession
     {
         private Board board;
 
-        public Game(int level)
+        public RoundSession(int level)
         {
             this.board = LevelManager.SetupLevel(level);
         }

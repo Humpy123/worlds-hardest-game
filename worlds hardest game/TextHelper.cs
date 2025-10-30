@@ -95,7 +95,7 @@ namespace worlds_hardest_game
                 TextHelper.PrintStaggeredText
                     (playerScore.Name, Console.WindowWidth / 2 - 10, ++scoreYCoord, ConsoleColor.DarkCyan, 10);
                 TextHelper.PrintStaggeredText
-                    (totalScore, Console.WindowWidth / 2 + 10, scoreYCoord, ConsoleColor.DarkCyan, 10);
+                    (("Score: " + playerScore.GameScore), Console.WindowWidth / 2 + 10, scoreYCoord, ConsoleColor.DarkCyan, 10);
                 Console.WriteLine();
             }
         }
