@@ -16,9 +16,11 @@ namespace worlds_hardest_game
         public static async Task RunCubeAnimation(CancellationToken token, int x, int y, int returnX, int returnY)
         {
             int index = 0;
+            string[] cube;
+
             while (!token.IsCancellationRequested)
             {
-                string[] cube = File.ReadAllLines(
+                cube = File.ReadAllLines(
                     @"..\..\..\assets\asciiart\kub" + ((index++ % 6) + 1) + ".txt");
 
                 TextHelper.PrintLargeText(cube, ConsoleColor.DarkCyan, x, y);

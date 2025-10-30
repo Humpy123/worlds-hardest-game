@@ -35,11 +35,10 @@ namespace worlds_hardest_game
          {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
             Console.CursorVisible = false;
-            Board board;
             Game game;
 
             int timeElapsed = 0;
-            int level = 5;
+            int level = 1;
             int deathCount = 0;
             bool gameRunning = true;
 
@@ -106,13 +105,13 @@ namespace worlds_hardest_game
             TextHelper.PrintLargeText
                 (TextHelper.InGameLogo2,
                  ConsoleColor.DarkCyan,
-                (Console.WindowWidth / 2 - 60),
+                 Console.WindowWidth/2-42,
                  TextHelper.FindCenterY(TextHelper.InGameLogo2));
 
             // Run cube animation again
             var cts = new CancellationTokenSource();
             var cubeAnimation = TextHelper.RunCubeAnimation
-               (cts.Token, (Console.WindowWidth-40), 8, 0, 0);
+               (cts.Token, (Console.WindowWidth/2+20), 8, 0, 0);
 
             Console.ReadKey();
         }
