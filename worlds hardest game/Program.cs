@@ -11,8 +11,6 @@ namespace worlds_hardest_game
                 (TextHelper.IntroLogo, ConsoleColor.DarkCyan,
                  TextHelper.FindCenterX(TextHelper.IntroLogo[0]), 15, 30);
 
-            Console.SetCursorPosition((Console.WindowWidth / 2), 23);
-
             TextHelper.PrintStaggeredText
             (TextHelper.nameQuery,
             TextHelper.FindCenterX(TextHelper.nameQuery),
@@ -51,7 +49,7 @@ namespace worlds_hardest_game
 
             //Fetch player name, limit to 20 characters
             string nameInput = PlayIntro();
-            string playerName = nameInput.Length > 20 ? nameInput.Substring(0, 30) : nameInput;
+            string playerName = nameInput.Length > 20 ? nameInput.Substring(0, 20) : nameInput;
 
             while (gameRunning)
             {

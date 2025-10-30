@@ -41,7 +41,6 @@ namespace worlds_hardest_game
             X += dx;
             Y += dy;
         }
-        public bool IsAt(int x, int y) => X == x && Y == y;
     }
 
     public class BasicEnemy : CharacterBase, IEnemy
@@ -113,10 +112,8 @@ namespace worlds_hardest_game
             Color = color;
         }
 
-        public override void Move(Board board)
-        {
-            moveBehavior.MoveGroup(this.Body, board);
-        }
+        public override void Move(Board board) => moveBehavior.MoveGroup(this.Body, board);
+
 
         public override void Print(Board board)
         {

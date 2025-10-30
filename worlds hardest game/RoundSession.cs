@@ -27,10 +27,9 @@ namespace worlds_hardest_game
             var lastUpdate = DateTime.Now;
             var updateInterval = TimeSpan.FromMilliseconds(100);
 
-            while (!board.GameOver)
+            while (!board.IsGameOver)
             {
                 Console.SetCursorPosition(1, 1);
-                board.Debug();
 
                 // Handle input as fast as possible
                 board.MovePlayer();

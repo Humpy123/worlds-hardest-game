@@ -21,7 +21,7 @@ namespace worlds_hardest_game
 
         public int CoinCount { get; set; }
         public bool IsLevelCompleted { get; private set; }
-        public bool GameOver { get; private set; } = false;
+        public bool IsGameOver { get; private set; } = false;
         public Player Player { get; private set; }
         public EnemyGroup enemyGroup { get; set; }
 
@@ -59,11 +59,11 @@ namespace worlds_hardest_game
                 Console.WriteLine();
             }
         }
-        public void EndGame() => GameOver = true;
-        public void WonGame()
+        public void EndRound() => IsGameOver = true;
+        public void RoundWon()
         {
             IsLevelCompleted = true;
-            GameOver = true;
+            IsGameOver = true;
         }
         public void AddCell(ICell cell, int x, int y) => cells[x, y] = cell;
         public void PrintCell(string text, ConsoleColor color)
@@ -74,10 +74,7 @@ namespace worlds_hardest_game
         }
 
         public void MovePlayer() => Player.Move(this);
-        public void PrintPlayer()
-        {
-            Player.Print(this);
-        }
+        public void PrintPlayer() => Player.Print(this);
 
         // Check for player collision with cell
         public void CheckPlayerCell()
@@ -108,7 +105,7 @@ namespace worlds_hardest_game
                 if (enemy.CheckCollision(Player.X, Player.Y))
                 {
                     if (Player.Immunity <= 0)
-                        this.EndGame();
+                        this.EndRound();
                 }
             }      
         }
@@ -126,9 +123,7 @@ namespace worlds_hardest_game
                 enemy.Move(this);
                 enemy.Print(this);
             }
-        }
-
-        public void Debug() => Console.WriteLine();     
+        } 
         public bool IsWallAt(int x, int y) => cells[x, y] is Wall;
         public bool IsWallAtOffset(CharacterBase character, int dx, int dy) => IsWallAt(character.X + dx, character.Y + dy);
 

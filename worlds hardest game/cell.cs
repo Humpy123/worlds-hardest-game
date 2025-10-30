@@ -12,6 +12,11 @@ namespace worlds_hardest_game
         char Symbol { get; }
         ConsoleColor Color { get; set; }
     }
+    public interface ICollectible
+    {
+        void ApplyEffect(Board board);
+    }
+
     public class Empty : ICell
     {
         public void OnEnter(Board board) { }
@@ -32,16 +37,12 @@ namespace worlds_hardest_game
         public void OnEnter(Board board)
         {
             if(board.CoinCount <= 0)
-                board.WonGame();
+                board.RoundWon();
         }
         public char Symbol => '█';
         public ConsoleColor Color { get; set; } = ConsoleColor.Green;
     }
 
-    public interface ICollectible
-    {
-        void ApplyEffect(Board board);
-    }
 
     public class Coin : ICell, ICollectible
     {
@@ -74,9 +75,6 @@ namespace worlds_hardest_game
 
     public class Freeze : ICell, ICollectible
     {
-        private int duration { get; set; }
-        public Freeze() => this.duration = 15;
-        public Freeze(int duration) => this.duration = duration;
         public void ApplyEffect(Board board)
         {
             board.FreezeNearbyEnemies();
